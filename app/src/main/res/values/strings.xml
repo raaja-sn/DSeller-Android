@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">DSeller</string>
+    
+    <!-- Sign Up -->
+    <string name="signup_title">Sign Up</string>
+    <string name="signup_title_info">Enter your details to continue</string>
+    <string name="signup_name">Full Name</string>
+    <string name="signup_email">Email</string>
+    <string name="signup_phone">Phone Number</string>
+    <string name="signup_password">Password</string>
+    <string name="signup_terms_info">By continuing you agree to our Terms of Service and Privacy Policy.</string>
+    <string name="signup_login_info">Already have an account? </string>
+    <string name="signup_error_username">Username must be atleast 4 characters long</string>
+    <string name="signup_error_email">Not a valid email address</string>
+    <string name="signup_error_phone">Phone number must be 10 digits long</string>
+    <string name="signup_error_password">Password must be atleast 8 characters long. Must contain:
+    \nOne uppercase letter \nOne lowercase letter \nOne digit \nAny one of the *,@,!,_,.,- symbols</string>
+
+
+    <!-- Login -->
+    <string name="login_title">Login</string>
+    <string name="login_title_info">Enter your email and password</string>
+    <string name="login_forgot">Forgot Password?</string>
+    <string name="login_signup_info">Don’t have an account? </string>
+
+    <!-- Confirmation -->
+    <string name="confirmation_title">Enter you 6 digit verification code</string>
+    <string name="confirmation_code">Code</string>
+    <string name="confirmation_resend">Resend Code</string>
+
+    <!-- Home -->
+    <string name="home_categories_title">Categories</string>
+
+    <!-- Search -->
+    <string name="search_placeholder_product">Search Store</string>
+
+    <!-- Error -->
+    <string name="error_title_default">Failed</string>
+    <string name="error_title_error">Error</string>
+
+    <!-- dialog -->
+    <string name="dialog_positive_text">OK</string>
+    <string name="dialog_retry_text">Retry</string>
+    <string name="dialog_negative_text">Cancel</string>
+    <string name="dialog_close_text">Close</string>
+
+    <!-- Content Descriptions -->
+    <string name="description_logo">D Seller Logo</string>
+    <string name="description_confirm_code">Confirm Code Button</string>
+    <string name="description_search_icon">Search Icon</string>
+    <string name="description_cancel_search_icon">Cancel Search Button</string>
+
+
+</resources>

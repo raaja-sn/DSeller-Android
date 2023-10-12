@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SignUp Screen -->
+    <dimen name="thirty_dp">30dp</dimen>
+    <dimen name="ten_dp">10dp</dimen>
+    <dimen name="twenty_dp">20dp</dimen>
+    <dimen name="twenty_five_dp">25dp</dimen>
+    <dimen name="five_dp">5dp</dimen>
+    <dimen name="one_twenty_dp">120dp</dimen>
+    <dimen name="fifty_fifty_dp">55dp</dimen>
+    <dimen name="fourty_dp">40dp</dimen>
+    <dimen name="thirty_five_dp">35dp</dimen>
+    <dimen name="fifteen_dp">15dp</dimen>
+    <dimen name="seventy_dp">70dp</dimen>
+    <dimen name="two_fifty_dp">250dp</dimen>
+
+    <dimen name="category_card_width">160dp</dimen>
+    <dimen name="category_card_height">173dp</dimen>
+    <dimen name="category_img_size">112dp</dimen>
+
+
+</resources>
