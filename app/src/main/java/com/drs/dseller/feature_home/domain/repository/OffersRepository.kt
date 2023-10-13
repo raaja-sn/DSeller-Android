@@ -10,7 +10,7 @@ interface OffersRepository<R>{
     /**
      * Get offers for home screen
      *
-     * @return [R] The result of the get offers event
+     * @return [R] Offers
      */
     suspend fun getHomeOffers():R
 

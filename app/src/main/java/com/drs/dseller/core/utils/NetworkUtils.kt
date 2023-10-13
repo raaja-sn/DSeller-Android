@@ -8,6 +8,12 @@ class NetworkUtils {
 
     companion object{
 
+        /**
+         * Parse the response body with error into the Error Response object
+         *
+         * @param body The error response body
+         * @return [ErrorResponse] the parsed object
+         */
         fun parseErrorResponse(body:ResponseBody?):ErrorResponse{
             return body?.string()?.toNetworkErrorResponse()?:
             ErrorResponse("2","Unknown Error")

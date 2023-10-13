@@ -11,11 +11,11 @@ class ServiceGenerator @Inject constructor(
     private val authInterceptor: AuthInterceptor
 ) {
 
+    private val okHttpClient = okHttpBuilder.addInterceptor(authInterceptor).build()
+    private val retrofit = retroFitBuilder.client(okHttpClient).build()
     fun <N> generateService(
         serviceClass:Class<N>,
     ):N {
-        val httpClient = okHttpBuilder.addInterceptor(authInterceptor)
-        val retrofit = retroFitBuilder.client(httpClient.build()).build()
         return retrofit.create(serviceClass)
     }
 
