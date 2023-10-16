@@ -40,7 +40,6 @@ class GetProductDetailShould:BaseTest() {
     @Test
     fun`send error details in unavailable`() = runTest{
         val id = "s5s5ds"
-        val product = ProductDetail(name = "Indian Terrain T-Shirt Blue")
         whenever(repo.getProductDetail(id)).thenReturn(
             ProductResponse.Error("Error")
         )

@@ -55,7 +55,7 @@ class ProductsViewModel @Inject constructor(
     private fun listProducts(){
         val filter = ProductSearchFilter(
             category = productScreenState.value.category,
-            sortBy = AppConstants.API_QUERY_KEY_DATE,
+            sortBy = AppConstants.API_QUERY_KEY_NAME,
             sortOrder = AppConstants.SORT_ORDER_DESCENDING,
         )
         val listFlow = productsUseCases.listProducts(filter).cachedIn(viewModelScope)
@@ -73,7 +73,7 @@ class ProductsViewModel @Inject constructor(
 
     private fun getSearchFilter(productScreenFilter:ProductScreenFilter):ProductSearchFilter{
         return when(productScreenFilter){
-            is ProductScreenFilter.ByDate -> {
+            is ProductScreenFilter.ByName -> {
                 ProductSearchFilter(
                     category = productScreenState.value.category,
                     sortBy = AppConstants.API_QUERY_KEY_DATE,
@@ -108,7 +108,8 @@ sealed class ProductsEvent{
 
 sealed class ProductScreenFilter{
     data class ByPrice(val sortOrder:ProductSortOrder):ProductScreenFilter()
-    data class ByDate(val sortOrder:ProductSortOrder):ProductScreenFilter()
+    data class ByName(val sortOrder:ProductSortOrder):ProductScreenFilter()
+
 }
 
 sealed class ProductSortOrder{

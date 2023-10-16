@@ -8,15 +8,14 @@ import com.drs.dseller.feature_products.domain.model.ProductSearchFilter
  */
 data class ProductPagingKey(
     val filter:ProductSearchFilter,
-    val isPrepend:Boolean = false
+    //val isPrepend:Boolean = false
 ) {
 
     companion object{
 
         fun fromSearchFilter(searchFilter: ProductSearchFilter):ProductPagingKey{
             return ProductPagingKey(
-                searchFilter,
-                false
+                searchFilter
             )
         }
     }

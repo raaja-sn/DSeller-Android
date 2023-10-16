@@ -28,28 +28,18 @@ class ProductListPagingSource(
                 key.filter.sortBy,
                 key.filter.sortOrder,
                 key.filter.pageNumber,
-                30
+                20
             )
             val pList = resultResp.body() ?: listOf()
             if (pList.isEmpty()) {
-                if (key.isPrepend) {
-                    LoadResult.Page(
-                        pList,
-                        getKey(key.filter.pageNumber, true, key),
-                        getKey(key.filter.pageNumber + 1, false, key)
-                    )
-                } else {
-                    LoadResult.Page(
-                        pList,
-                        getKey(key.filter.pageNumber - 1, true, key),
-                        getKey(key.filter.pageNumber, false, key)
-                    )
-                }
+                println("loading page ${key.filter.pageNumber}")
+                LoadResult.Page(pList,null,null)
             } else {
+                println("loading page ${key.filter.pageNumber}")
                 LoadResult.Page(
                     pList,
-                    getKey(key.filter.pageNumber - 1, true, key),
-                    getKey(key.filter.pageNumber + 1, false, key)
+                    getKey(key.filter.pageNumber - 1,  key),
+                    getKey(key.filter.pageNumber + 1, key)
                 )
             }
         } catch (e: Exception) {
@@ -57,7 +47,7 @@ class ProductListPagingSource(
         }
     }
 
-    private fun getKey(pageNumber:Int, isPrepend:Boolean, key:ProductPagingKey):ProductPagingKey{
-        return ProductPagingKey(key.filter.copy(pageNumber = pageNumber),isPrepend)
+    private fun getKey(pageNumber:Int, key:ProductPagingKey):ProductPagingKey{
+        return ProductPagingKey(key.filter.copy(pageNumber = pageNumber))
     }
 }

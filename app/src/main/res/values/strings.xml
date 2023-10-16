@@ -34,6 +34,14 @@
     <!-- Search -->
     <string name="search_placeholder_product">Search Store</string>
 
+    <!-- Product -->
+    <string name="product_filter_title">Sort By</string>
+    <string name="product_filter_name_asc">Name: (A-Z)</string>
+    <string name="product_filter_name_desc">Name: (Z-A)</string>
+    <string name="product_filter_price_descending">Price: High to Low</string>
+    <string name="product_filter_price_ascending">Price: Low to High</string>
+
+
     <!-- Error -->
     <string name="error_title_default">Failed</string>
     <string name="error_title_error">Error</string>
@@ -49,6 +57,10 @@
     <string name="description_confirm_code">Confirm Code Button</string>
     <string name="description_search_icon">Search Icon</string>
     <string name="description_cancel_search_icon">Cancel Search Button</string>
+    <string name="description_product_list_sort_name_asc">Sort Products by name in ascending order</string>
+    <string name="description_product_list_sort_name_desc">Sort Products by name in descending order</string>
+    <string name="description_product_list_sort_price_asc">Sort Products by lower price to higher pricer</string>
+    <string name="description_product_list_sort_price_desc">Sort Products by higher price to lower price</string>
 
 
 </resources>

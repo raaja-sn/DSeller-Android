@@ -35,6 +35,9 @@ import com.drs.dseller.feature_onboarding.presentation.screens.login.SignInScree
 import com.drs.dseller.feature_onboarding.presentation.screens.signup.SignUpScreen
 import com.drs.dseller.feature_onboarding.presentation.toOnboard
 import com.drs.dseller.feature_onboarding.presentation.viewmodels.OnBoardingViewModel
+import com.drs.dseller.feature_products.presentation.ProductsEvent
+import com.drs.dseller.feature_products.presentation.ProductsViewModel
+import com.drs.dseller.feature_products.presentation.screens.ProductListScreen
 import com.drs.dseller.feature_user_session.presentation.screens.SplashScreen
 import com.drs.dseller.feature_user_session.presentation.viewmodels.SplashScreenViewModel
 import com.drs.dseller.ui.theme.DSellerTheme
@@ -67,13 +70,16 @@ class DSellerActivity : ComponentActivity() {
                         toOnboard(navController = navController)
 
                         composable("home"){
-                            val vm:HomeViewModel = it.getViewModel(navController = navController)
+                           /* val vm:HomeViewModel = it.getViewModel(navController = navController)
 
                             HomeScreen(
                                 state = vm.homeState.value,
                                 vm,
                                 navController
-                            )
+                            )*/
+                            val vm:ProductsViewModel = it.getViewModel(navController = navController)
+
+                            ProductListScreen(state = vm.productScreenState.value, vm =vm )
 
                         }
                     }

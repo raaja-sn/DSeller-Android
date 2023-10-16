@@ -13,5 +13,6 @@ class AppConstants {
 
         const val API_QUERY_KEY_DATE = "creation"
         const val API_QUERY_KEY_PRICE = "price"
+        const val API_QUERY_KEY_NAME = "name"
     }
 }

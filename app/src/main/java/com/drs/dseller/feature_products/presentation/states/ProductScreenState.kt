@@ -9,11 +9,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class ProductScreenState (
-    val category:String = "",
+    val category:String = "Electronics",
     val subCategories:List<String> = listOf(),
-    val filter:ProductScreenFilter = ProductScreenFilter.ByDate(ProductSortOrder.DESCENDING),
+    val filter:ProductScreenFilter = ProductScreenFilter.ByName(ProductSortOrder.DESCENDING),
     val productsFlow: Flow<PagingData<Product>> = flow {
-        //emit(PagingData.empty())
     },
     val productDetail:ProductDetail = ProductDetail(),
     val productDetailLoading:Boolean = false,

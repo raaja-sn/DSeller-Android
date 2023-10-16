@@ -20,7 +20,7 @@ class ProductListRepositoryImpl(
     private lateinit var productPagingSource:ProductListPagingSource
     override fun getProductsList(key: ProductSearchFilter): Flow<PagingData<Product>> {
         return Pager(
-            PagingConfig(pageSize = 30, maxSize = 90)
+            PagingConfig(pageSize = 20, maxSize = 80)
         ){
             productPagingSource = ProductListPagingSource(productService,ProductPagingKey.fromSearchFilter(key))
             productPagingSource
