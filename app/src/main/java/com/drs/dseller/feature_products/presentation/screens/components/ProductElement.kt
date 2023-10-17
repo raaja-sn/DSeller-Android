@@ -3,6 +3,7 @@ package com.drs.dseller.feature_products.presentation.screens.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,6 +17,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,32 +33,34 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.drs.dseller.R
+import com.drs.dseller.core.utils.AppUtils
+import com.drs.dseller.feature_products.domain.model.Product
 import com.drs.dseller.ui.theme.AppTypography
 import com.drs.dseller.ui.theme.Black80
 import com.drs.dseller.ui.theme.Green40
 import com.drs.dseller.ui.theme.Grey60
-import java.util.Currency
-import java.util.Locale
 
 @Composable
 fun ProductElement(
-    cardWidth:Dp = dimensionResource(id = R.dimen.product_card_width),
-    imageSize:Dp = dimensionResource(id = R.dimen.product_img_size),
-    productName:String = "",
-    productImage:String = "",
-    placeHolderImageId:Int = R.drawable.place_holder_small,
-    price:String = "",
-    index:Int,
-    productClicked:(Int) -> Unit,
-    addToCart:(Int) -> Unit
+    cardWidth: Dp = dimensionResource(id = R.dimen.product_card_width),
+    cardHeight:Dp = dimensionResource(id = R.dimen.product_card_height),
+    product:Product,
+    placeHolderImageId:Int = R.drawable.place_holder_medium,
+    productClicked:(String) -> Unit,
+    addToCart:(String) -> Unit
 ){
-
+    println("Width --- $cardWidth")
+    val cardModifier = remember{
+        Modifier
+            .width(cardWidth)
+            .height(cardHeight)
+            .clickable{
+                productClicked(product.productId)
+            }
+    }
 
     OutlinedCard(
-        modifier = Modifier
-            .wrapContentHeight()
-            .width(cardWidth)
-            .height(dimensionResource(id = R.dimen.product_card_height)),
+        modifier = cardModifier,
         shape = RoundedCornerShape(15.dp),
         colors = CardDefaults.outlinedCardColors(
             containerColor = Color.White
@@ -67,21 +71,24 @@ fun ProductElement(
         AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(imageSize, imageSize),
+                .size(
+                    dimensionResource(id = R.dimen.product_img_size),
+                    dimensionResource(id = R.dimen.product_img_size)
+                ),
             model = ImageRequest.Builder(LocalContext.current)
-                .data(productImage)
+                .data(getProductImage(0,product.productPictures))
                 .crossfade(300)
                 .placeholder(placeHolderImageId)
                 .error(placeHolderImageId)
                 .build(),
-            contentDescription = "$productName image",
+            contentDescription = "${product.name} image",
             contentScale = ContentScale.Crop
         )
 
         Text(
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 10.dp),
-            text = productName,
+            text = product.name,
             style = AppTypography.titleSmall,
             color = Black80,
             maxLines = 2,
@@ -99,7 +106,7 @@ fun ProductElement(
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
                     .align(Alignment.CenterStart),
-                text = getPriceWithCurrencyCode(price),
+                text = getPriceWithCurrencyCode(product.price),
                 style = AppTypography.titleSmall,
                 maxLines = 1,
                 color = Black80,
@@ -112,12 +119,12 @@ fun ProductElement(
                     .clip(RoundedCornerShape(35))
                     .background(Green40)
                     .align(Alignment.CenterEnd),
-                onClick = { addToCart(index) }
+                onClick = { addToCart(product.productId) }
             ) {
                 Image(
                     modifier = Modifier,
                     painter = painterResource(id = R.drawable.ic_add),
-                    contentDescription = "Add $productName to cart")
+                    contentDescription = "Add ${product.name} to cart")
             }
 
         }
@@ -125,20 +132,28 @@ fun ProductElement(
     }
 }
 
-fun getPriceWithCurrencyCode(price:String):String {
-    return "$currencySymbol $price"
+private fun getPriceWithCurrencyCode(price:Double):String {
+    return "${AppUtils.getCurrencySymbol("en","in")} $price"
 }
 
-val currencySymbol = Currency.getInstance(Locale.getDefault()).symbol
+private fun getProductImage(idx:Int,productImages: List<String>):String{
+    return if(idx >= productImages.size){
+        return ""
+    }else{
+        productImages[idx]
+    }
+}
+
+
 
 @Preview
 @Composable
 private fun ProductElementPreview(){
 
     ProductElement(
-        imageSize = 120.dp,
-        productName = "Samsung S22 5G ",
-        price = "5000",
-        index = 0, productClicked = {}, addToCart = {})
+        product = Product(
+            name = "Samsung S22 5G ",
+            price = 5000.0,
+        ), productClicked = {}, addToCart = {})
 
 }

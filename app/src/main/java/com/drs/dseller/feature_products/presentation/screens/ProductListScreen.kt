@@ -34,7 +34,7 @@ fun ProductListScreen(
             override fun onResume(owner: LifecycleOwner) {
                 super.onResume(owner)
                 if(list.itemCount > 0) return
-                vm.onEvent(ProductsEvent.ListProducts)
+                vm.onProductListEvent(ProductsEvent.ListProducts)
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -44,12 +44,12 @@ fun ProductListScreen(
     }
 
     val callback = remember{
-        {idx:Int ->
+        {idx:String ->
 
         }
     }
     val cart = remember{
-        {idx:Int ->
+        {idx:String ->
 
         }
     }
@@ -66,9 +66,7 @@ fun ProductListScreen(
         ){ index:Int->
             list[index]?.let{
                 ProductElement(
-                    productName = it.name,
-                    price = it.price.toString(),
-                    index = 5, productClicked = callback, addToCart = cart)
+                   product = it, productClicked = callback, addToCart = cart)
             }
 
         }

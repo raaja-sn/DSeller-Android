@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -152,7 +150,7 @@ fun HomeBody(
                     textModifier = textModifier,
                     category = item.name,
                     categoryImage = item.image,
-                    placeHolderId = R.drawable.place_holder_small,
+                    placeHolderId = R.drawable.place_holder_medium,
                     index = index,
                     containerColor = CategoryCardColors[index],
                     clickCallback = categoryClicked

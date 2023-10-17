@@ -9,6 +9,7 @@ import com.drs.dseller.core.constants.AppConstants
 import com.drs.dseller.feature_products.domain.model.ProductSearchFilter
 import com.drs.dseller.feature_products.domain.usecases.ProductsUseCases
 import com.drs.dseller.feature_products.presentation.states.ProductDetailErrorState
+import com.drs.dseller.feature_products.presentation.states.ProductDetailState
 import com.drs.dseller.feature_products.presentation.states.ProductScreenState
 import com.drs.dseller.feature_products.response.ProductResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,26 +24,37 @@ class ProductsViewModel @Inject constructor(
     private val _productScreenState = mutableStateOf(ProductScreenState())
     val productScreenState:State<ProductScreenState> = _productScreenState
 
-    fun onEvent(event:ProductsEvent){
+    private val _productDetailState = mutableStateOf(ProductDetailState())
+    val productDetailState:State<ProductDetailState> = _productDetailState
+
+    fun onProductListEvent(event:ProductsEvent){
         when(event){
-            is ProductsEvent.GetDetailForProduct -> getProductDetail(event.productId)
             ProductsEvent.ListProducts -> listProducts()
             is ProductsEvent.ListProductsForNewFilter -> listProductsForNewFilter(event.filter)
         }
     }
 
+    fun onProductDetailEvent(event:ProductsDetailEvent){
+        when(event){
+            is ProductsDetailEvent.GetDetailForProduct -> getProductDetail(event.productId)
+            is ProductsDetailEvent.AddToBasket ->{
+
+            }
+        }
+    }
+
     private fun getProductDetail(productId:String){
         viewModelScope.launch {
-            _productScreenState.value = _productScreenState.value.copy(productDetailLoading = true)
+            _productDetailState.value = _productDetailState.value.copy(productDetailLoading = true)
             when(val r = productsUseCases.getProductDetail(productId)){
                 is ProductResponse.Error -> {
-                    _productScreenState.value = _productScreenState.value.copy(
+                    _productDetailState.value = _productDetailState.value.copy(
                         productDetailLoading = false,
                         productDetailErrorState = ProductDetailErrorState(true,r.message)
                     )
                 }
                 is ProductResponse.Success -> {
-                    _productScreenState.value = _productScreenState.value.copy(
+                    _productDetailState.value = _productDetailState.value.copy(
                         productDetailLoading = false,
                         productDetail = r.result
                     )
@@ -99,20 +111,35 @@ class ProductsViewModel @Inject constructor(
 
 }
 
+/**
+ * Events in Products list screen
+ */
 sealed class ProductsEvent{
-
-    data class GetDetailForProduct(val productId:String):ProductsEvent()
     data object ListProducts:ProductsEvent()
     data class ListProductsForNewFilter(val filter:ProductScreenFilter):ProductsEvent()
 }
 
+/**
+ * Sealed class used to list products according to the filter
+ */
 sealed class ProductScreenFilter{
     data class ByPrice(val sortOrder:ProductSortOrder):ProductScreenFilter()
     data class ByName(val sortOrder:ProductSortOrder):ProductScreenFilter()
 
 }
 
+/**
+ * The sort order for the filter
+ */
 sealed class ProductSortOrder{
     data object DESCENDING:ProductSortOrder()
     data object ASCENDING:ProductSortOrder()
+}
+
+/**
+ * Events from Product Detail screen
+ */
+sealed class ProductsDetailEvent{
+    data class GetDetailForProduct(val productId:String):ProductsDetailEvent()
+    data class AddToBasket(val quantity:Int):ProductsDetailEvent()
 }

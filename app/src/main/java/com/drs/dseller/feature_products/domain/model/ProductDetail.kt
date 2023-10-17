@@ -6,7 +6,10 @@ data class ProductDetail(
     val category:String = "",
     val subCategory:String = "",
     val descriptionLong:String = "",
+    val descriptionShort:String = "",
     val price:Double = 0.0,
     val productStock:Int = 0,
-    val productPictures:List<String> = listOf()
+    val productPictures:List<String> = listOf(
+        ""
+    )
 )

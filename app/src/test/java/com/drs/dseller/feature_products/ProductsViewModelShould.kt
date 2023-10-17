@@ -10,7 +10,6 @@ import com.drs.dseller.feature_products.presentation.ProductsEvent
 import com.drs.dseller.feature_products.presentation.ProductsViewModel
 import com.drs.dseller.feature_products.response.ProductResponse
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -52,7 +51,7 @@ class ProductsViewModelShould : BaseTest() {
                emit(PagingData.from(products))
             }
         )
-        vm.onEvent(ProductsEvent.ListProducts)
+        vm.onProductListEvent(ProductsEvent.ListProducts)
         advanceUntilIdle()
         job.cancel()
     }
@@ -64,7 +63,7 @@ class ProductsViewModelShould : BaseTest() {
         whenever(useCases.getProductDetail.invoke(id)).thenReturn(
             ProductResponse.Success(product)
         )
-        vm.onEvent(ProductsEvent.GetDetailForProduct(id))
+        vm.onProductListEvent(ProductsEvent.GetDetailForProduct(id))
         advanceUntilIdle()
         verify(useCases.getProductDetail, times(1)).invoke(id)
         assertEquals(vm.productScreenState.value.productDetail.name , "Indian Terrain T-Shirt Blue")
@@ -77,7 +76,7 @@ class ProductsViewModelShould : BaseTest() {
         whenever(useCases.getProductDetail.invoke(id)).thenReturn(
             ProductResponse.Error("Error")
         )
-        vm.onEvent(ProductsEvent.GetDetailForProduct(id))
+        vm.onProductListEvent(ProductsEvent.GetDetailForProduct(id))
         advanceUntilIdle()
         assertEquals(vm.productScreenState.value.productDetailErrorState.message , "Error")
     }

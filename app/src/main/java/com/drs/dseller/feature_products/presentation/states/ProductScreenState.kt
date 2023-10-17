@@ -13,9 +13,6 @@ data class ProductScreenState (
     val subCategories:List<String> = listOf(),
     val filter:ProductScreenFilter = ProductScreenFilter.ByName(ProductSortOrder.DESCENDING),
     val productsFlow: Flow<PagingData<Product>> = flow {
-    },
-    val productDetail:ProductDetail = ProductDetail(),
-    val productDetailLoading:Boolean = false,
-    val productDetailErrorState:ProductDetailErrorState = ProductDetailErrorState()
+    }
 ){
 }

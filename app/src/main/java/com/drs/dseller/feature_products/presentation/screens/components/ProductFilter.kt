@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.drs.dseller.R
+import com.drs.dseller.core.ui_elements.buttons.RoundCorneredButton
 import com.drs.dseller.feature_products.presentation.ProductScreenFilter
 import com.drs.dseller.feature_products.presentation.ProductSortOrder
 import com.drs.dseller.ui.theme.AppTypography
@@ -35,6 +37,22 @@ fun ProductFilter(
     currentFilter:ProductScreenFilter,
     sortSelectionCallback:(ProductScreenFilter) -> Unit
 ){
+
+    var filter = remember{
+        mutableStateOf(currentFilter)
+    }
+    
+    val sortSelected = remember{
+        { selection:ProductScreenFilter ->
+            filter.value = selection
+        }
+    }
+
+    val applyFilter = remember {
+        {
+            sortSelectionCallback(filter.value)
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -74,9 +92,16 @@ fun ProductFilter(
         )
         SortType(
             selected = currentFilter is ProductScreenFilter.ByPrice && currentFilter.sortOrder is ProductSortOrder.DESCENDING,
-            sortSelectionCallback,
+            sortSelected,
             SortType.ByPriceDescending
         )
+
+        RoundCorneredButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = dimensionResource(id = R.dimen.twenty_five_dp)),
+            buttonText = stringResource(id = R.string.product_filter_button),
+            clickCallback = applyFilter)
 
     }
 
@@ -85,7 +110,7 @@ fun ProductFilter(
 @Composable
 private fun SortType(
     selected:Boolean,
-    callback:(ProductScreenFilter) -> Unit,
+    sortSelected:(ProductScreenFilter) -> Unit,
     sortType: SortType
 ){
 
@@ -95,20 +120,25 @@ private fun SortType(
             .clickable {
                 if (selected) return@clickable
                 when (sortType) {
-                    SortType.ByNameAscending -> callback(ProductScreenFilter.ByName(ProductSortOrder.ASCENDING))
-                    SortType.ByNameDescending -> callback(
+                    SortType.ByNameAscending -> sortSelected(
+                        ProductScreenFilter.ByName(
+                            ProductSortOrder.ASCENDING
+                        )
+                    )
+
+                    SortType.ByNameDescending -> sortSelected(
                         ProductScreenFilter.ByName(
                             ProductSortOrder.DESCENDING
                         )
                     )
 
-                    SortType.ByPriceAscending -> callback(
+                    SortType.ByPriceAscending -> sortSelected(
                         ProductScreenFilter.ByPrice(
                             ProductSortOrder.ASCENDING
                         )
                     )
 
-                    SortType.ByPriceDescending -> callback(
+                    SortType.ByPriceDescending -> sortSelected(
                         ProductScreenFilter.ByPrice(
                             ProductSortOrder.DESCENDING
                         )
