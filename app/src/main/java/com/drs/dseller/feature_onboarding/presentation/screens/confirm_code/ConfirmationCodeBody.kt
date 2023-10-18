@@ -61,7 +61,7 @@ fun ConfirmationCodeBody(
             )
             Text(
                 text = stringResource(id = R.string.confirmation_title),
-                style = AppTypography.headlineMedium,
+                style = AppTypography.headlineLarge,
                 color = Black80
             )
             FormTextField(

@@ -32,13 +32,13 @@ fun DefaultAppBar(
     title:String,
     navIconClicked:()->Unit,
     actionResId:Int? = null,
-    actionClicked:()->Unit
+    actionClicked:(()->Unit) = {  },
 ){
     CenterAlignedTopAppBar(
         title = {
             Text(
                 text = title,
-                style = AppTypography.headlineMedium,
+                style = AppTypography.headlineSmall,
                 overflow = TextOverflow.Ellipsis,
                 color = Black80
             )

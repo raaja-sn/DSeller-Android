@@ -56,8 +56,8 @@ fun ProductFilter(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
             .wrapContentHeight()
+            .fillMaxWidth()
             .clip(
                 RoundedCornerShape(
                     topEnd = dimensionResource(id = R.dimen.twenty_five_dp),
@@ -74,24 +74,28 @@ fun ProductFilter(
             style = AppTypography.headlineMedium,
             color = Black80
         )
-
+        println(" Sort Type ---- ${filter}")
         SortType(
-            selected = currentFilter is ProductScreenFilter.ByName && currentFilter.sortOrder is ProductSortOrder.ASCENDING,
-            sortSelectionCallback,
+            selected = filter.value is ProductScreenFilter.ByName &&
+                    (filter.value as ProductScreenFilter.ByName).sortOrder is ProductSortOrder.ASCENDING,
+            sortSelected,
             SortType.ByNameAscending
         )
         SortType(
-            selected = currentFilter is ProductScreenFilter.ByName && currentFilter.sortOrder is ProductSortOrder.DESCENDING,
-            sortSelectionCallback,
+            selected = filter.value is ProductScreenFilter.ByName &&
+                    (filter.value as ProductScreenFilter.ByName).sortOrder is ProductSortOrder.DESCENDING,
+            sortSelected,
             SortType.ByNameDescending
         )
         SortType(
-            selected = currentFilter is ProductScreenFilter.ByPrice && currentFilter.sortOrder is ProductSortOrder.ASCENDING,
-            sortSelectionCallback,
+            selected = filter.value is ProductScreenFilter.ByPrice &&
+                    (filter.value as ProductScreenFilter.ByPrice).sortOrder is ProductSortOrder.ASCENDING,
+            sortSelected,
             SortType.ByPriceAscending
         )
         SortType(
-            selected = currentFilter is ProductScreenFilter.ByPrice && currentFilter.sortOrder is ProductSortOrder.DESCENDING,
+            selected = filter.value is ProductScreenFilter.ByPrice &&
+                    (filter.value as ProductScreenFilter.ByPrice).sortOrder is ProductSortOrder.DESCENDING,
             sortSelected,
             SortType.ByPriceDescending
         )
@@ -116,9 +120,7 @@ private fun SortType(
 
     val radioModifier = remember{
         Modifier
-            .padding(vertical = 10.dp)
             .clickable {
-                if (selected) return@clickable
                 when (sortType) {
                     SortType.ByNameAscending -> sortSelected(
                         ProductScreenFilter.ByName(
@@ -147,23 +149,26 @@ private fun SortType(
             }
     }
     Row (
-        modifier = radioModifier,
+        modifier = Modifier
+            .padding(vertical = dimensionResource(id = R.dimen.five_dp)),
         verticalAlignment = Alignment.CenterVertically
     ){
         if(selected){
             Icon(
-                modifier = Modifier
+                modifier = radioModifier
                     .padding(end = dimensionResource(id = R.dimen.ten_dp))
-                    .size(dimensionResource(id = R.dimen.fourty_dp)),
+                    .size(dimensionResource(id = R.dimen.fourty_dp))
+                    .padding(dimensionResource(id = R.dimen.ten_dp)),
                 painter = painterResource(id = R.drawable.ic_radio_selected),
                 contentDescription = stringResource(id = R.string.description_product_list_sort_name_asc),
                 tint = Color.Unspecified
                 )
         }else{
             Icon(
-                modifier = Modifier
+                modifier = radioModifier
                     .padding(end = dimensionResource(id = R.dimen.ten_dp))
-                    .size(dimensionResource(id = R.dimen.fourty_dp)),
+                    .size(dimensionResource(id = R.dimen.fourty_dp))
+                    .padding(dimensionResource(id = R.dimen.ten_dp)),
                 painter =  painterResource(id = R.drawable.ic_radio),
                 contentDescription = stringResource(id = R.string.description_product_list_sort_name_asc),
                 tint = Color.Unspecified
@@ -174,7 +179,7 @@ private fun SortType(
             modifier = Modifier
                 .padding(horizontal = 10.dp),
             text = getSortTitle(sortType = sortType),
-            style = AppTypography.bodyMedium,
+            style = AppTypography.bodySmall,
             color = Black80
         )
     }

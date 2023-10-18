@@ -31,11 +31,11 @@ import androidx.navigation.NavHostController
 import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.dialog.DefaultBottomDialog
 import com.drs.dseller.core.ui_elements.fonts.appFonts
+import com.drs.dseller.feature_products.presentation.toProducts
 import com.drs.dseller.feature_user_session.onBoardUser
 import com.drs.dseller.feature_user_session.presentation.states.SplashScreenState
 import com.drs.dseller.feature_user_session.presentation.viewmodels.SplashEvent
 import com.drs.dseller.feature_user_session.presentation.viewmodels.SplashScreenViewModel
-import com.drs.dseller.feature_user_session.toHome
 import com.drs.dseller.ui.theme.Green40
 
 @Composable
@@ -53,7 +53,8 @@ fun SplashScreen(
 
     val moveToHome = remember{
         {
-            navController.toHome()
+            //navController.toHome()
+            navController.toProducts("Electronics")
         }
     }
 

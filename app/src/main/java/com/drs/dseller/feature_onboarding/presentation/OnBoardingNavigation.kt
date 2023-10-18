@@ -28,7 +28,7 @@ fun NavHostController.toSplash(){
     navigate("splash")
 }
 
-fun NavGraphBuilder.toOnboard(navController:NavHostController){
+fun NavGraphBuilder.Onboard(navController:NavHostController){
     navigation("login","onboard"){
         composable("login"){
             val vm: OnBoardingViewModel = it.getViewModel(navController = navController)

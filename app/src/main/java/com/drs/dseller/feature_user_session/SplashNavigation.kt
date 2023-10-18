@@ -7,7 +7,4 @@ fun NavHostController.onBoardUser(){
     this.navigate("onboard")
 }
 
-fun NavHostController.toHome(){
-    popBackStack()
-    navigate("home")
-}
+

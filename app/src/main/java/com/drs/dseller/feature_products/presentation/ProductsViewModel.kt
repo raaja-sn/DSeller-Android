@@ -31,6 +31,17 @@ class ProductsViewModel @Inject constructor(
         when(event){
             ProductsEvent.ListProducts -> listProducts()
             is ProductsEvent.ListProductsForNewFilter -> listProductsForNewFilter(event.filter)
+            is ProductsEvent.FilterClicked -> {
+                _productScreenState.value = _productScreenState.value.copy(
+                    showFilterOptions = !_productScreenState.value.showFilterOptions
+                )
+            }
+
+            is ProductsEvent.SetProductsCategory -> {
+                _productScreenState.value = _productScreenState.value.copy(
+                    category = event.category
+                )
+            }
         }
     }
 
@@ -39,6 +50,12 @@ class ProductsViewModel @Inject constructor(
             is ProductsDetailEvent.GetDetailForProduct -> getProductDetail(event.productId)
             is ProductsDetailEvent.AddToBasket ->{
 
+            }
+
+            is ProductsDetailEvent.SetProductId -> {
+                _productDetailState.value = _productDetailState.value.copy(
+                    productId = event.productId
+                )
             }
         }
     }
@@ -76,9 +93,10 @@ class ProductsViewModel @Inject constructor(
 
     private fun listProductsForNewFilter(filter:ProductScreenFilter){
         _productScreenState.value = _productScreenState.value.copy(
-            filter = filter
+            filter = filter,
+            showFilterOptions = !_productScreenState.value.showFilterOptions
         )
-        //productsUseCases.changeFilterAndListProducts(getSearchFilter(filter))
+        _productScreenState.value = _productScreenState.value.copy(filter = filter)
         val listFlow = productsUseCases.listProducts(getSearchFilter(filter)).cachedIn(viewModelScope)
         _productScreenState.value = _productScreenState.value.copy(productsFlow = listFlow)
     }
@@ -88,7 +106,7 @@ class ProductsViewModel @Inject constructor(
             is ProductScreenFilter.ByName -> {
                 ProductSearchFilter(
                     category = productScreenState.value.category,
-                    sortBy = AppConstants.API_QUERY_KEY_DATE,
+                    sortBy = AppConstants.API_QUERY_KEY_NAME,
                     sortOrder = getSortOrderString(productScreenFilter.sortOrder),
                 )
             }
@@ -115,8 +133,11 @@ class ProductsViewModel @Inject constructor(
  * Events in Products list screen
  */
 sealed class ProductsEvent{
+    data class SetProductsCategory(val category:String):ProductsEvent()
     data object ListProducts:ProductsEvent()
     data class ListProductsForNewFilter(val filter:ProductScreenFilter):ProductsEvent()
+
+    data object FilterClicked:ProductsEvent()
 }
 
 /**
@@ -140,6 +161,7 @@ sealed class ProductSortOrder{
  * Events from Product Detail screen
  */
 sealed class ProductsDetailEvent{
+    data class SetProductId(val productId:String):ProductsDetailEvent()
     data class GetDetailForProduct(val productId:String):ProductsDetailEvent()
     data class AddToBasket(val quantity:Int):ProductsDetailEvent()
 }

@@ -1,19 +1,19 @@
 package com.drs.dseller.feature_products.presentation.screens.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.drs.dseller.R
+import com.drs.dseller.core.ui_elements.clickableWithoutRipple
 import com.drs.dseller.core.utils.AppUtils
 import com.drs.dseller.feature_products.domain.model.Product
 import com.drs.dseller.ui.theme.AppTypography
@@ -49,19 +50,30 @@ fun ProductElement(
     productClicked:(String) -> Unit,
     addToCart:(String) -> Unit
 ){
-    println("Width --- $cardWidth")
+    val interactionSource = remember{ MutableInteractionSource() }
     val cardModifier = remember{
         Modifier
+            .wrapContentSize()
             .width(cardWidth)
             .height(cardHeight)
-            .clickable{
+            .padding(vertical = 15.dp)
+            .clickableWithoutRipple(interactionSource){
                 productClicked(product.productId)
+            }
+    }
+
+    val iconModifier = remember{
+        Modifier
+            .padding(start = 10.dp, end = 15.dp)
+            .clip(RoundedCornerShape(35))
+            .clickable {
+                addToCart(product.productId)
             }
     }
 
     OutlinedCard(
         modifier = cardModifier,
-        shape = RoundedCornerShape(15.dp),
+        shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.outlinedCardColors(
             containerColor = Color.White
         ),
@@ -76,7 +88,7 @@ fun ProductElement(
                     dimensionResource(id = R.dimen.product_img_size)
                 ),
             model = ImageRequest.Builder(LocalContext.current)
-                .data(getProductImage(0,product.productPictures))
+                .data(getProductImageFromListOfImages(0,product.productPictures))
                 .crossfade(300)
                 .placeholder(placeHolderImageId)
                 .error(placeHolderImageId)
@@ -112,20 +124,17 @@ fun ProductElement(
                 color = Black80,
             )
 
-            IconButton(
-                modifier = Modifier
-                    .padding(start = 10.dp, end = 15.dp)
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(35))
+            Icon(
+                modifier = iconModifier
                     .background(Green40)
+                    .size(37.dp)
+                    .padding(12.dp)
                     .align(Alignment.CenterEnd),
-                onClick = { addToCart(product.productId) }
-            ) {
-                Image(
-                    modifier = Modifier,
-                    painter = painterResource(id = R.drawable.ic_add),
-                    contentDescription = "Add ${product.name} to cart")
-            }
+                painter = painterResource(id = R.drawable.ic_add),
+                contentDescription = "Add product to cart",
+                tint = Color.Unspecified
+            )
+
 
         }
 
@@ -136,8 +145,8 @@ private fun getPriceWithCurrencyCode(price:Double):String {
     return "${AppUtils.getCurrencySymbol("en","in")} $price"
 }
 
-private fun getProductImage(idx:Int,productImages: List<String>):String{
-    return if(idx >= productImages.size){
+fun getProductImageFromListOfImages(idx:Int, productImages: List<String>?):String{
+    return if(productImages == null || idx >= productImages.size){
         return ""
     }else{
         productImages[idx]

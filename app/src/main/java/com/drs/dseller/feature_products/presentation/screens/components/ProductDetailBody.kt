@@ -58,18 +58,20 @@ fun ProductDetailBody(
 
     val incrementQuantity:()->Unit = remember{
         {
-            quantity.intValue.inc()
+
+            quantity.intValue = quantity.intValue.inc()
         }
     }
     val decrementQuantity:()->Unit = remember{
-        {
-            quantity.intValue.dec()
+        decrement@{
+            if(quantity.intValue < 1) return@decrement
+            quantity.intValue = quantity.intValue.dec()
         }
     }
 
     val addToBasket:()->Unit = remember{
         {
-            addToCart(quantity.value)
+            addToCart(quantity.intValue)
         }
     }
 
@@ -92,7 +94,7 @@ fun ProductDetailBody(
                         )
                     ),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(state.productDetail?.productPictures?.get(0) ?:"")
+                    .data(getProductImageFromListOfImages(0,state.productDetail?.productPictures))
                     .placeholder(R.drawable.place_holder_small)
                     .error(R.drawable.place_holder_small)
                     .crossfade(200)
@@ -105,7 +107,7 @@ fun ProductDetailBody(
             ProductShortDescription(state = state)
             ProductQuantityAndPrice(
                 state = state,
-                quantity = quantity.value,
+                quantity = quantity.intValue,
                 increaseQuantity = incrementQuantity,
                 reduceQuantity = decrementQuantity
             )
@@ -143,7 +145,10 @@ state:ProductDetailState
     ) {
         Text(
             modifier = Modifier
-                .padding(end = dimensionResource(id = R.dimen.ten_dp))
+                .padding(
+                    end = dimensionResource(id = R.dimen.ten_dp),
+                    top = dimensionResource(id = R.dimen.ten_dp)
+                )
                 .align(Alignment.CenterStart),
             text = state.productDetail?.name?:"--",
             style = AppTypography.headlineSmall,
@@ -171,7 +176,6 @@ private fun ProductShortDescription(
         modifier = Modifier
             .padding(
                 horizontal = dimensionResource(id = R.dimen.twenty_dp),
-                vertical = dimensionResource(id = R.dimen.ten_dp)
             ),
         text = state.productDetail?.descriptionShort?:"--",
         style = AppTypography.titleSmall,
@@ -198,7 +202,10 @@ private fun ProductQuantityAndPrice(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = dimensionResource(id = R.dimen.twenty_dp)),
+            .padding(
+                horizontal = dimensionResource(id = R.dimen.twenty_dp),
+                vertical = dimensionResource(id = R.dimen.ten_dp)
+            ),
         contentAlignment = Alignment.CenterStart
     ){
         Row(
@@ -266,8 +273,8 @@ private fun ProductDescription(
             .padding(
                 start = dimensionResource(id = R.dimen.twenty_dp),
                 end = dimensionResource(id = R.dimen.twenty_dp),
-                top = dimensionResource(id = R.dimen.twenty_five_dp),
-                bottom = dimensionResource(id = R.dimen.fifteen_dp)
+                top = dimensionResource(id = R.dimen.twenty_dp),
+                bottom = dimensionResource(id = R.dimen.ten_dp)
             ),
         thickness = 1.dp,
         color = White80
@@ -275,9 +282,9 @@ private fun ProductDescription(
     Text(
         modifier = Modifier
             .padding(
-                horizontal = dimensionResource(id = R.dimen.twenty_dp),
-                vertical = dimensionResource(id = R.dimen.ten_dp)
-            ),
+                horizontal = dimensionResource(id = R.dimen.twenty_dp)
+            )
+            .padding(top = dimensionResource(id = R.dimen.five_dp)),
         text = stringResource(id = R.string.product_detail_description_title),
         style = AppTypography.titleMedium,
         color = Black80,
@@ -286,8 +293,8 @@ private fun ProductDescription(
         modifier = Modifier
             .padding(
                 horizontal = dimensionResource(id = R.dimen.twenty_dp),
-                vertical = dimensionResource(id = R.dimen.five_dp)
-            ),
+            )
+            .padding(top = dimensionResource(id = R.dimen.ten_dp)),
         text = state.productDetail?.descriptionLong?:"--",
         style = AppTypography.bodySmall,
         color = Grey80,
@@ -299,7 +306,7 @@ private fun Review(
 
 ){
     val rating = remember{
-        val times = Random.nextInt(5)
+        val times = Random.nextInt(4)+1
         Pair(times,5-times)
     }
     Divider(
@@ -308,7 +315,7 @@ private fun Review(
             .padding(
                 start = dimensionResource(id = R.dimen.twenty_dp),
                 end = dimensionResource(id = R.dimen.twenty_dp),
-                top = dimensionResource(id = R.dimen.twenty_five_dp),
+                top = dimensionResource(id = R.dimen.twenty_dp),
                 bottom = dimensionResource(id = R.dimen.ten_dp)
             ),
         thickness = 1.dp,
