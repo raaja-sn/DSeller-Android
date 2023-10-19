@@ -13,34 +13,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
-import com.amplifyframework.auth.AuthUserAttribute
-import com.amplifyframework.auth.AuthUserAttributeKey
-import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
-import com.amplifyframework.auth.options.AuthFetchSessionOptions
-import com.amplifyframework.auth.options.AuthSignUpOptions
-import com.amplifyframework.kotlin.core.Amplify
 import com.drs.dseller.feature_home.presentation.HomeViewModel
 import com.drs.dseller.feature_home.presentation.screens.HomeScreen
-import com.drs.dseller.feature_onboarding.presentation.screens.confirm_code.ConfirmationCodeScreen
-import com.drs.dseller.feature_onboarding.presentation.screens.login.SignInScreen
-import com.drs.dseller.feature_onboarding.presentation.screens.signup.SignUpScreen
-import com.drs.dseller.feature_onboarding.presentation.toOnboard
-import com.drs.dseller.feature_onboarding.presentation.viewmodels.OnBoardingViewModel
+import com.drs.dseller.feature_onboarding.presentation.Onboard
+import com.drs.dseller.feature_products.presentation.Products
 import com.drs.dseller.feature_user_session.presentation.screens.SplashScreen
 import com.drs.dseller.feature_user_session.presentation.viewmodels.SplashScreenViewModel
 import com.drs.dseller.ui.theme.DSellerTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class DSellerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,17 +50,19 @@ class DSellerActivity : ComponentActivity() {
                                 vm = vm , navController = navController)
                         }
 
-                        toOnboard(navController = navController)
+                        Onboard(navController = navController)
 
                         composable("home"){
-                            val vm:HomeViewModel = it.getViewModel(navController = navController)
+                            val vm: HomeViewModel = it.getViewModel(navController = navController)
 
                             HomeScreen(
                                 state = vm.homeState.value,
                                 vm,
                                 navController
                             )
+
                         }
+                        Products(navController)
                     }
 
                 }

@@ -11,11 +11,20 @@ import java.lang.Exception
 
 class SessionRepositoryImpl : SessionRepository<SessionResponse<AppUser>> {
 
+    private var appUser:AppUser? = null
+
     override suspend fun logoutUser(): SessionResponse<AppUser> {
         TODO("Not yet implemented")
     }
 
     override suspend fun getUser(): SessionResponse<AppUser> {
+        return appUser?.let {
+            SessionResponse.Success(it)
+        }?: getUserFromAwsSession()
+
+    }
+
+    private suspend fun getUserFromAwsSession():SessionResponse<AppUser>{
         return try{
             val userAttrs = Amplify.Auth.fetchUserAttributes()
             var fullName = ""
@@ -31,11 +40,11 @@ class SessionRepositoryImpl : SessionRepository<SessionResponse<AppUser>> {
             }
             SessionResponse.Success(
                 AppUser(
-                fullName,
-                email,
-                phoneNumber,
-                dsellerId
-            )
+                    fullName,
+                    email,
+                    phoneNumber,
+                    dsellerId
+                )
             )
         }catch(e:Exception){
             when(e){

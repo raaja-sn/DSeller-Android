@@ -71,7 +71,7 @@ fun SignUpScreenBody(
             modifier = parentModifier
                 .padding(vertical = dimensionResource(R.dimen.ten_dp)),
             text = stringResource(R.string.signup_title),
-            style = AppTypography.headlineMedium,
+            style = AppTypography.headlineLarge,
             color = Black80
         )
         Text(

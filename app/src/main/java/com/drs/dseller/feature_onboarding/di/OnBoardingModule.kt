@@ -10,11 +10,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
 class OnBoardingModule {
 
+    @ViewModelScoped
     @Provides
     fun createOnBoardingWithConfirmCodeRepo(
         serviceGenerator:ServiceGenerator
@@ -23,6 +25,7 @@ class OnBoardingModule {
         return OnBoardingWithConfirmCodeImpl(serviceGenerator)
     }
 
+    @ViewModelScoped
     @Provides
     fun createOnBoardingRepo(
         repo:OnBoardingWithConfirmCodeRepository<AppUserWithPassword, OnBoardingResponse<Unit>>

@@ -19,7 +19,6 @@ import com.drs.dseller.feature_onboarding.presentation.toSignUp
 import com.drs.dseller.feature_onboarding.presentation.toSplash
 import com.drs.dseller.feature_onboarding.presentation.viewmodels.LoginEvent
 import com.drs.dseller.feature_onboarding.presentation.viewmodels.OnBoardingViewModel
-import com.drs.dseller.feature_user_session.toHome
 
 @Composable
 fun SignInScreen(

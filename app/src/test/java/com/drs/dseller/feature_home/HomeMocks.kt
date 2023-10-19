@@ -4,6 +4,7 @@ import com.drs.dseller.feature_home.domain.model.Category
 import com.drs.dseller.feature_home.domain.model.HomeOffer
 import com.drs.dseller.feature_home.domain.usecases.GetCategories
 import com.drs.dseller.feature_home.domain.usecases.GetHomeOffers
+import com.drs.dseller.feature_home.domain.usecases.HomeSearchProduct
 import com.drs.dseller.feature_home.domain.usecases.HomeUseCases
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.spy
@@ -14,7 +15,8 @@ class HomeMocks {
         fun getUseCases():HomeUseCases{
             val getCategories:GetCategories = mock()
             val getOffers:GetHomeOffers = mock()
-            return spy(HomeUseCases(getCategories,getOffers))
+            val homeSearchProduct:HomeSearchProduct = mock()
+            return spy(HomeUseCases(getCategories,getOffers,homeSearchProduct))
         }
 
         fun getCategories():List<Category>{

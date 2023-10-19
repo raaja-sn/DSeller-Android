@@ -8,5 +8,11 @@ class AppConstants {
 
         const val D_SELLER_USER_ID_ATTRIBUTE_KEY = "custom:dseller-user-id"
 
+        const val SORT_ORDER_DESCENDING = "desc"
+        const val SORT_ORDER_ASCENDING = "asc"
+
+        const val API_QUERY_KEY_DATE = "creation"
+        const val API_QUERY_KEY_PRICE = "price"
+        const val API_QUERY_KEY_NAME = "name"
     }
 }

@@ -10,9 +10,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.drs.dseller.R
 import com.drs.dseller.ui.theme.AppTypography
 import com.drs.dseller.ui.theme.Green40
 import com.drs.dseller.ui.theme.Grey60
@@ -23,7 +25,7 @@ fun RoundCorneredButton(
     modifier:Modifier = Modifier,
     buttonColor:Color = Green40,
     buttonText:String,
-    isEnabled:Boolean,
+    isEnabled:Boolean = true,
     clickCallback:()->Unit
 ){
     Button(
@@ -34,12 +36,12 @@ fun RoundCorneredButton(
             disabledContainerColor = buttonColor.copy(alpha = 0.5f),
         ),
         enabled = isEnabled,
-        shape = RoundedCornerShape(15.dp),
-        contentPadding = PaddingValues(vertical = 15.dp),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.twenty_dp)),
+        contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.twenty_dp)),
         onClick = clickCallback) {
         Text(
             text = buttonText,
-            style = AppTypography.titleSmall,
+            style = AppTypography.titleMedium,
             color = if(isEnabled) {
                 Color.White
             }else{

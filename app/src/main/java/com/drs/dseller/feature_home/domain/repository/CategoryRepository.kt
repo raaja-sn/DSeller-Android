@@ -10,7 +10,7 @@ interface CategoryRepository<R> {
     /**
      * Get product categories
      *
-     * @return [R] The result of the get categories event
+     * @return [R] The product categories
      */
     suspend fun getCategories():R
 

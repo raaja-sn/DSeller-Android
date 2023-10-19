@@ -10,16 +10,19 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class UserSessionModule {
 
+    @Singleton
     @Provides
     fun createSessionRepository(): SessionRepository<SessionResponse<AppUser>> {
         return SessionRepositoryImpl()
     }
 
+    @Singleton
     @Provides
     fun createAuthRepository(): AuthRepository {
         return AuthRepositoryImpl()

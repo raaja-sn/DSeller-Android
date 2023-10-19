@@ -35,11 +35,17 @@ val Typography = Typography(
 )
 
 val AppTypography = Typography(
-    headlineMedium = TextStyle(
+    headlineLarge = TextStyle(
         fontFamily = appFonts,
         fontWeight = FontWeight.SemiBold,
         fontSize = 25.sp,
         lineHeight = 35.sp
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = appFonts,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+        lineHeight = 29.sp
     ),
     headlineSmall = TextStyle(
         fontFamily = appFonts,

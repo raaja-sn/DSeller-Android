@@ -95,7 +95,7 @@ private fun CardPreview(){
             .padding(horizontal = 10.dp, vertical = 20.dp),
         category = "Fresh Fruits & Vegetables",
         categoryImage = "https://dseller-test.s3.ap-south-1.amazonaws.com/categories/Electronics.jpg",
-        placeHolderId = R.drawable.place_holder_small,
+        placeHolderId = R.drawable.place_holder_medium,
         index = 5,
         containerColor = Green40,
     ){

@@ -1,5 +1,8 @@
 package com.drs.dseller.feature_home.response
 
+/**
+ *  Sealed class used as event responses for home screen related operations
+ */
 sealed class HomeResponse<out H> {
 
     /**
