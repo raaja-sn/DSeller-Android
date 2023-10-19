@@ -11,16 +11,18 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
 
+    @Singleton
     @Provides
     fun getOkHttpBuilder(): OkHttpClient.Builder {
         return OkHttpClient.Builder()
     }
-
+    @Singleton
     @Provides
     fun getRetrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder().apply {
@@ -28,14 +30,14 @@ class RetrofitModule {
             this.addConverterFactory(GsonConverterFactory.create())
         }
     }
-
+    @Singleton
     @Provides
     fun getAuthInterceptor(
         authRepo: AuthRepository
     ): AuthInterceptor {
         return AuthInterceptor(authRepo)
     }
-
+    @Singleton
     @Provides
     fun getServiceGenerator(
         okhttpBuilder: OkHttpClient.Builder,

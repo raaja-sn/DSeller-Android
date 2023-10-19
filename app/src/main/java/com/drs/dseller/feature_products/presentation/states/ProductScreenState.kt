@@ -14,6 +14,7 @@ data class ProductScreenState (
     val filter:ProductScreenFilter = ProductScreenFilter.ByName(ProductSortOrder.DESCENDING),
     val showFilterOptions:Boolean = false,
     val productsFlow: Flow<PagingData<Product>> = flow {
-    }
+    },
+    val productInfo:ProductInfoState = ProductInfoState()
 ){
 }

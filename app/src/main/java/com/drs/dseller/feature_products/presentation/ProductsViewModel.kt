@@ -6,10 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.drs.dseller.core.constants.AppConstants
+import com.drs.dseller.core.domain.model.shopping_cart.CartProduct
+import com.drs.dseller.core.domain.usecases.shopping_cart_use_cases.ShoppingCartUseCases
+import com.drs.dseller.feature_products.domain.model.Product
+import com.drs.dseller.feature_products.domain.model.ProductDetail
 import com.drs.dseller.feature_products.domain.model.ProductSearchFilter
 import com.drs.dseller.feature_products.domain.usecases.ProductsUseCases
 import com.drs.dseller.feature_products.presentation.states.ProductDetailErrorState
 import com.drs.dseller.feature_products.presentation.states.ProductDetailState
+import com.drs.dseller.feature_products.presentation.states.ProductInfoState
 import com.drs.dseller.feature_products.presentation.states.ProductScreenState
 import com.drs.dseller.feature_products.response.ProductResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductsViewModel @Inject constructor(
-    private val productsUseCases: ProductsUseCases
+    private val productsUseCases: ProductsUseCases,
+    private val cartUseCases: ShoppingCartUseCases
 ):ViewModel(){
 
     private val _productScreenState = mutableStateOf(ProductScreenState())
@@ -42,19 +48,47 @@ class ProductsViewModel @Inject constructor(
                     category = event.category
                 )
             }
+
+            is ProductsEvent.AddToCart -> {
+               addListProductToCart(event.product)
+            }
+
+            ProductsEvent.HideProductInfo ->{
+                _productScreenState.value = _productScreenState.value.copy(
+                    productInfo = ProductInfoState(
+                        showInfoState = false
+                    )
+                )
+            }
         }
     }
 
     fun onProductDetailEvent(event:ProductsDetailEvent){
         when(event){
             is ProductsDetailEvent.GetDetailForProduct -> getProductDetail(event.productId)
-            is ProductsDetailEvent.AddToBasket ->{
-
+            is ProductsDetailEvent.AddToCart ->{
+                productDetailState.value.productDetail?.let{
+                    addProductToCart(event.quantity,it)
+                }
             }
 
             is ProductsDetailEvent.SetProductId -> {
                 _productDetailState.value = _productDetailState.value.copy(
                     productId = event.productId
+                )
+            }
+
+            is ProductsDetailEvent.UpdateProductQuantity -> {
+                productDetailState.value.productDetail?.let{
+                    updateQuantityOfProductInCart(event.quantity,it)
+                }
+            }
+
+            ProductsDetailEvent.HideProductInfo -> {
+                _productDetailState.value = _productDetailState.value.copy(
+                    productInfo = ProductInfoState(
+                        showInfoState = false
+                    )
                 )
             }
         }
@@ -79,6 +113,64 @@ class ProductsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    /**
+     * Add product to cart when the user adds it from the products list
+     */
+    private fun addListProductToCart(listProduct:Product){
+        if(cartUseCases.hasProduct(listProduct.productId)){
+            cartUseCases.incrementQuantity(
+                cartUseCases.getProduct(listProduct.productId).quantity+1,
+                listProduct.productId
+            )
+        }else{
+            cartUseCases.addProduct(CartProduct(
+                productName = listProduct.name,
+                productId = listProduct.productId,
+                quantity = 1,
+                price = listProduct.price
+            ))
+        }
+        _productScreenState.value = _productScreenState.value.copy(
+            productInfo = ProductInfoState(
+                info = "${listProduct.name} added to cart"
+            )
+        )
+    }
+
+    /**
+     * Add product to cart when the user adds it from the products detail screen
+     */
+    private fun addProductToCart(quantity: Int,product: ProductDetail){
+        cartUseCases.addProduct(
+            CartProduct(
+                productName = product.name,
+                productId = product.productId,
+                quantity = 1,
+                price = product.price
+            )
+        )
+        _productDetailState.value = _productDetailState.value.copy(
+            productInfo = ProductInfoState(
+                info = "${product.name} added to cart"
+            )
+        )
+    }
+
+    /**
+     * Update quantity of the product, if user adds the same product to cart from the product detail screen
+     */
+    private fun updateQuantityOfProductInCart(quantity:Int,product: ProductDetail){
+        cartUseCases.incrementQuantity(
+            cartUseCases.getProduct(product.productId).quantity+1,
+            product.productId
+        )
+        _productDetailState.value = _productDetailState.value.copy(
+            productInfo = ProductInfoState(
+                info = "${product.name} added to cart"
+            )
+        )
     }
 
     private fun listProducts(){
@@ -133,11 +225,26 @@ class ProductsViewModel @Inject constructor(
  * Events in Products list screen
  */
 sealed class ProductsEvent{
+    /**
+     *  Set the [ProductScreenState.category], which is used to fetch the products related to the category
+     */
     data class SetProductsCategory(val category:String):ProductsEvent()
+
     data object ListProducts:ProductsEvent()
+
+    /**
+     * List products according to the new filter
+     */
     data class ListProductsForNewFilter(val filter:ProductScreenFilter):ProductsEvent()
 
+    /**
+     * UI event when a filter icon is clicked. To display or hide filter UI
+     */
     data object FilterClicked:ProductsEvent()
+
+    data class AddToCart(val product:Product):ProductsEvent()
+
+    data object HideProductInfo:ProductsEvent()
 }
 
 /**
@@ -161,7 +268,20 @@ sealed class ProductSortOrder{
  * Events from Product Detail screen
  */
 sealed class ProductsDetailEvent{
+
+    /**
+     *  Set the [ProductDetailState.productId], which is used to fetch the product associated with the ID
+     */
     data class SetProductId(val productId:String):ProductsDetailEvent()
+
     data class GetDetailForProduct(val productId:String):ProductsDetailEvent()
-    data class AddToBasket(val quantity:Int):ProductsDetailEvent()
+
+    data class AddToCart(val quantity:Int):ProductsDetailEvent()
+
+    /**
+     * If a product is already in the cart, update its quantity
+     */
+    data class UpdateProductQuantity(val quantity: Int):ProductsDetailEvent()
+
+    data object HideProductInfo:ProductsDetailEvent()
 }

@@ -6,6 +6,7 @@ data class ProductDetailState(
     val productId:String? = null,
     val productDetail: ProductDetail? = null,
     val productDetailLoading:Boolean = false,
-    val productDetailErrorState:ProductDetailErrorState = ProductDetailErrorState()
+    val productDetailErrorState:ProductDetailErrorState = ProductDetailErrorState(),
+    val productInfo:ProductInfoState = ProductInfoState()
 ) {
 }

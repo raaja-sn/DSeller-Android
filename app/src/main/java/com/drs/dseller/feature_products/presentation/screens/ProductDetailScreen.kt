@@ -3,17 +3,14 @@
 package com.drs.dseller.feature_products.presentation.screens
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -55,10 +52,10 @@ fun ProductDetailScreen(
         }
     }
 
-    val addToBasket = remember {
+    val addToCart = remember {
         addToBasket@{quantity:Int ->
             if(quantity == 0)return@addToBasket
-            vm.onProductDetailEvent(ProductsDetailEvent.AddToBasket(quantity))
+            vm.onProductDetailEvent(ProductsDetailEvent.AddToCart(quantity))
         }
     }
 
@@ -79,7 +76,7 @@ fun ProductDetailScreen(
         ) {
             ProductDetailBody(
                 state = state,
-                addToCart = addToBasket
+                addToCart = addToCart
             )
         }
 
