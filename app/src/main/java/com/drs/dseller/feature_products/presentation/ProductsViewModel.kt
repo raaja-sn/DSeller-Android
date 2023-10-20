@@ -68,6 +68,15 @@ class ProductsViewModel @Inject constructor(
             is ProductsDetailEvent.GetDetailForProduct -> getProductDetail(event.productId)
             is ProductsDetailEvent.AddToCart ->{
                 productDetailState.value.productDetail?.let{
+                    if(cartUseCases.hasProduct(it.productId)){
+                        _productDetailState.value = _productDetailState.value.copy(
+                            productInfo = ProductInfoState(
+                                showInfoState = true,
+                                info = "Product already added to cart. Would you like to add again?"
+                            )
+                        )
+                        return
+                    }
                     addProductToCart(event.quantity,it)
                 }
             }
@@ -129,7 +138,8 @@ class ProductsViewModel @Inject constructor(
                 productName = listProduct.name,
                 productId = listProduct.productId,
                 quantity = 1,
-                price = listProduct.price
+                price = listProduct.price,
+                productImage = getProductImageUrl(listProduct.productPictures)
             ))
         }
         _productScreenState.value = _productScreenState.value.copy(
@@ -147,8 +157,9 @@ class ProductsViewModel @Inject constructor(
             CartProduct(
                 productName = product.name,
                 productId = product.productId,
-                quantity = 1,
-                price = product.price
+                quantity = quantity,
+                price = product.price,
+                productImage = getProductImageUrl(product.productPictures)
             )
         )
         _productDetailState.value = _productDetailState.value.copy(
@@ -163,7 +174,7 @@ class ProductsViewModel @Inject constructor(
      */
     private fun updateQuantityOfProductInCart(quantity:Int,product: ProductDetail){
         cartUseCases.incrementQuantity(
-            cartUseCases.getProduct(product.productId).quantity+1,
+            quantity,
             product.productId
         )
         _productDetailState.value = _productDetailState.value.copy(
@@ -171,6 +182,11 @@ class ProductsViewModel @Inject constructor(
                 info = "${product.name} added to cart"
             )
         )
+    }
+
+    private fun getProductImageUrl(pImages:List<String>):String{
+        if(pImages.isEmpty())return ""
+        return pImages[0]
     }
 
     private fun listProducts(){

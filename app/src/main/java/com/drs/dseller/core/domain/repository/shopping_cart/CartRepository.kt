@@ -68,4 +68,9 @@ interface CartRepository<P> {
      */
     fun getCartProducts():List<P>
 
+    /**
+     * Clear the shopping cart
+     */
+    fun clearCart()
+
 }

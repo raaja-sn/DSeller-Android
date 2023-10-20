@@ -4,10 +4,12 @@
     <!-- SignUp Screen -->
     <dimen name="thirty_dp">30dp</dimen>
     <dimen name="ten_dp">10dp</dimen>
+    <dimen name="twelve_dp">12dp</dimen>
     <dimen name="twenty_dp">20dp</dimen>
     <dimen name="twenty_five_dp">25dp</dimen>
     <dimen name="five_dp">5dp</dimen>
     <dimen name="one_twenty_dp">120dp</dimen>
+    <dimen name="one_hundred_dp">100dp</dimen>
     <dimen name="fifty_fifty_dp">55dp</dimen>
     <dimen name="fourty_dp">40dp</dimen>
     <dimen name="thirty_five_dp">35dp</dimen>
@@ -15,6 +17,9 @@
     <dimen name="seventy_dp">70dp</dimen>
     <dimen name="two_fifty_dp">250dp</dimen>
     <dimen name="two_hundred_dp">170dp</dimen>
+    <dimen name="three_hundred_dp">300dp</dimen>
+    <dimen name="four_hundred_dp">400dp</dimen>
+
 
     <dimen name="category_card_width">160dp</dimen>
     <dimen name="category_card_height">173dp</dimen>
@@ -23,4 +28,8 @@
     <dimen name="product_card_width">160dp</dimen>
     <dimen name="product_card_height">250dp</dimen>
     <dimen name="product_img_size">110dp</dimen>
+
+    <dimen name="cart_product_image_size">100dp</dimen>
+
+    <dimen name="app_bar_height">64dp</dimen>
 </resources>

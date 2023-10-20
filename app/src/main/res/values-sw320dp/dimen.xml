@@ -4,5 +4,6 @@
     <dimen name="product_card_width">160dp</dimen>
     <dimen name="product_card_height">250dp</dimen>
     <dimen name="product_img_size">110dp</dimen>
+    <dimen name="cart_product_image_size">100dp</dimen>
 
 </resources>

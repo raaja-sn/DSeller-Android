@@ -111,8 +111,8 @@ fun ProductListScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .padding(horizontal = dimensionResource(id = R.dimen.five_dp)),
-            products,
-            productItemClicked,
+            products = products,
+            itemClicked = productItemClicked,
             addToCart = addToCart
         )
 

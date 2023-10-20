@@ -11,6 +11,7 @@ class ShoppingCartUseCases @Inject constructor(
     val incrementQuantity: CartIncrementQuantity,
     val decrementQuantity: CartDecrementQuantity,
     val getProduct: CartGetProduct,
-    val getAllProducts: CartGetAllProducts
+    val getAllProducts: CartGetAllProducts,
+    val clearCart: ClearCart
 ) {
 }

@@ -47,6 +47,18 @@
     <string name="product_detail_review_title">Review</string>
     <string name="product_detail_add_to_basket">Add To Basket</string>
 
+    <!-- Cart -->
+    <string name="cart_title">My Cart</string>
+    <string name="cart_order_title">Place Order</string>
+    <string name="cart_order_total">Total Cart Value :</string>
+    <string name="cart_empty">Cart Empty</string>
+    <string name="cart_order_placed_title">Your order has been confirmed</string>
+    <string name="cart_order_placed_info">Your order has been placed successfully and is being processed</string>
+    <string name="cart_order_back">Back To Home</string>
+    <string name="cart_order_continue">Continue Shopping</string>
+    <string name="cart_order_filed_title">Oops! Order Failed</string>
+    <string name="cart_order_filed_try_again">Try Again</string>
+
 
     <!-- Error -->
     <string name="error_title_default">Failed</string>
@@ -74,6 +86,13 @@
     <string name="description_product_detail_rating">Product Rating Star</string>
     <string name="description_app_bar_back">Go back to previous screen</string>
     <string name="description_app_bar_filter">Filter Icon</string>
+    <string name="description_cart_product">Product Image</string>
+    <string name="description_cart_remove_product">Remove product from cart</string>
+    <string name="description_cart_empty">Cart empty Image</string>
+    <string name="description_order_placed">Order placed Image</string>
+    <string name="description_order_failed_close">Close Order Failed Dialog</string>
+    <string name="description_order_failed_image">order failed image</string>
+
 
 
 </resources>

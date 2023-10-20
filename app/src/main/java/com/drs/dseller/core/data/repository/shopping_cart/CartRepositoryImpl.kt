@@ -61,4 +61,8 @@ class CartRepositoryImpl:CartRepository<CartProduct> {
     override fun getCartProducts(): List<CartProduct> {
         return cart.values.toList()
     }
+
+    override fun clearCart() {
+        cart.clear()
+    }
 }

@@ -86,9 +86,11 @@ class ShoppingOrderViewModel @Inject constructor(
                     )
                 }
                 is ShoppingOrderResponse.Success -> {
+                    cartUseCases.clearCart()
                     _cartScreenState.value = _cartScreenState.value.copy(
                         isPlacingOrder = false,
-                        isOrderComplete = true
+                        isOrderComplete = true,
+                        cartItems = cartUseCases.getAllProducts()
                     )
                 }
             }
