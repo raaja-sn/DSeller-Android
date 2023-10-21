@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.drs.dseller.R
@@ -36,6 +37,7 @@ import com.drs.dseller.core.ui_elements.clickableWithoutRipple
 import com.drs.dseller.core.utils.AppUtils
 import com.drs.dseller.ui.theme.AppTypography
 import com.drs.dseller.ui.theme.Black80
+import com.drs.dseller.ui.theme.Grey60
 
 @Composable
 fun ShoppingCartProduct(
@@ -70,6 +72,7 @@ deleteProduct:(CartProduct) -> Unit
         }
     }
 
+    println("Cart Product: ${cartProduct.productName} quantity ${cartProduct.quantity}")
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -101,6 +104,7 @@ deleteProduct:(CartProduct) -> Unit
             ProductNameAndQuantity(
                 name = cartProduct.productName,
                 quantity = cartProduct.quantity ,
+                price = cartProduct.price,
                 incrementModifier = incrementModifier ,
                 decrementModifier = decrementModifier
             )
@@ -121,7 +125,7 @@ deleteProduct:(CartProduct) -> Unit
             Spacer(modifier = Modifier.weight(1f))
 
             Text(
-                text = "${AppUtils.getCurrencySymbol("en","in")} ${cartProduct.price}",
+                text = "${AppUtils.getCurrencySymbol("en","in")} ${cartProduct.price * cartProduct.quantity}",
                 style = AppTypography.titleMedium,
                 color = Black80,
                 maxLines = 1,
@@ -136,6 +140,7 @@ deleteProduct:(CartProduct) -> Unit
 private fun ColumnScope.ProductNameAndQuantity(
     name:String,
     quantity:Int,
+    price:Double,
     incrementModifier:Modifier,
     decrementModifier:Modifier,
 ){
@@ -149,6 +154,17 @@ private fun ColumnScope.ProductNameAndQuantity(
         style = AppTypography.titleSmall,
         color = Black80,
         maxLines = 2,
+        textAlign = TextAlign.Start
+    )
+    Text(
+        modifier = Modifier
+            .padding(dimensionResource(id = R.dimen.five_dp)),
+        text = "Item Price: $price",
+        style = AppTypography.bodySmall.copy(
+            fontSize = 11.sp
+        ),
+        color = Grey60,
+        maxLines = 1,
         textAlign = TextAlign.Start
     )
     Row(

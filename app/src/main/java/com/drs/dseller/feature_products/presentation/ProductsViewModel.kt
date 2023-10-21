@@ -30,7 +30,11 @@ class ProductsViewModel @Inject constructor(
     private val _productScreenState = mutableStateOf(ProductScreenState())
     val productScreenState:State<ProductScreenState> = _productScreenState
 
-    private val _productDetailState = mutableStateOf(ProductDetailState())
+    private val _productDetailState = mutableStateOf(
+        ProductDetailState(
+            cartFlow = cartUseCases.getAllProducts()
+        )
+    )
     val productDetailState:State<ProductDetailState> = _productDetailState
 
     fun onProductListEvent(event:ProductsEvent){
@@ -82,9 +86,12 @@ class ProductsViewModel @Inject constructor(
             }
 
             is ProductsDetailEvent.SetProductId -> {
-                _productDetailState.value = _productDetailState.value.copy(
-                    productId = event.productId
-                )
+                if(_productDetailState.value.productId != event.productId){
+                    _productDetailState.value = _productDetailState.value.copy(
+                        productId = event.productId
+                    )
+                    getProductDetail(event.productId)
+                }
             }
 
             is ProductsDetailEvent.UpdateProductQuantity -> {
@@ -129,10 +136,7 @@ class ProductsViewModel @Inject constructor(
      */
     private fun addListProductToCart(listProduct:Product){
         if(cartUseCases.hasProduct(listProduct.productId)){
-            cartUseCases.incrementQuantity(
-                cartUseCases.getProduct(listProduct.productId).quantity+1,
-                listProduct.productId
-            )
+            cartUseCases.incrementQuantity(1, listProduct.productId)
         }else{
             cartUseCases.addProduct(CartProduct(
                 productName = listProduct.name,

@@ -31,6 +31,7 @@ import androidx.navigation.NavHostController
 import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.dialog.DefaultBottomDialog
 import com.drs.dseller.core.ui_elements.fonts.appFonts
+import com.drs.dseller.feature_home.toHome
 import com.drs.dseller.feature_products.presentation.toProducts
 import com.drs.dseller.feature_user_session.onBoardUser
 import com.drs.dseller.feature_user_session.presentation.states.SplashScreenState
@@ -53,8 +54,7 @@ fun SplashScreen(
 
     val moveToHome = remember{
         {
-            //navController.toHome()
-            navController.toProducts("Electronics")
+           navController.toHome()
         }
     }
 

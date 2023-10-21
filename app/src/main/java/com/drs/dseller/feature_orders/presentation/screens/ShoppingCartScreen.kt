@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -30,15 +31,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.drs.dseller.R
 import com.drs.dseller.core.domain.model.shopping_cart.CartProduct
+import com.drs.dseller.core.ui_elements.appbar.AppBottomNavigationBar
 import com.drs.dseller.core.ui_elements.buttons.RoundCorneredButton
 import com.drs.dseller.feature_orders.presentation.CartEvent
 import com.drs.dseller.feature_orders.presentation.OrderEvent
 import com.drs.dseller.feature_orders.presentation.ShoppingOrderViewModel
 import com.drs.dseller.feature_orders.presentation.screens.components.ShoppingCartBody
 import com.drs.dseller.feature_orders.presentation.states.CartState
+import com.drs.dseller.feature_orders.presentation.toOrderSuccess
 import com.drs.dseller.ui.theme.AppTypography
 import com.drs.dseller.ui.theme.Black80
 import com.drs.dseller.ui.theme.Grey80
@@ -52,13 +56,13 @@ fun ShoppingCartScreen(
 
     val incrementQuantity = remember{
         {cartProduct:CartProduct ->
-            vm.onCartEvent(CartEvent.IncrementProductQuantity(cartProduct.productId,1))
+            vm.onCartEvent(CartEvent.IncrementProductQuantity(cartProduct.productId))
         }
     }
 
     val decrementQuantity = remember{
         {cartProduct:CartProduct ->
-            vm.onCartEvent(CartEvent.DecrementProductQuantity(cartProduct.productId,1))
+            vm.onCartEvent(CartEvent.DecrementProductQuantity(cartProduct.productId))
         }
     }
 
@@ -75,39 +79,55 @@ fun ShoppingCartScreen(
     }
 
     if(state.isOrderComplete){
-        //-------------------------
+        navHostController.toOrderSuccess()
         vm.onOrderEvent(OrderEvent.ResetOrderCompleteFlag)
     }
 
-    Box(){
-        ShoppingCartBody(
-            state = state,
-            incrementQuantity = incrementQuantity,
-            decrementQuantity = decrementQuantity,
-            deleteProduct = removeProduct,
-            placeOrder = placeOrder
-        )
-        AnimatedVisibility(
-            visible = state.errorState.isError,
-            enter = slideInVertically { it },
-            exit = slideOutVertically { it }
-        ) {
-            val closeDialog = remember{
-                {
-                    vm.onOrderEvent(OrderEvent.ChangeErrorState(false))
-                }
-            }
-            val tryAgain = remember {
-                {
-                    vm.onOrderEvent(OrderEvent.PlaceOrder)
-                    vm.onOrderEvent(OrderEvent.ChangeErrorState(false))
-                }
-            }
-            OrderFailedDialog(
-                message = state.errorState.message,
-                closeDialog,
-                tryAgain
+    val cartItems = state.cartFlow.collectAsStateWithLifecycle().value
+
+    Scaffold(
+        bottomBar = {
+            AppBottomNavigationBar(
+                cartQuantity = cartItems.size,
+                navHostController = navHostController
             )
+        }
+    ) { it ->
+        Box(
+            modifier = Modifier
+                .padding(it)
+        ){
+            ShoppingCartBody(
+                state = state,
+                incrementQuantity = incrementQuantity,
+                decrementQuantity = decrementQuantity,
+                deleteProduct = removeProduct,
+                placeOrder = placeOrder
+            )
+            AnimatedVisibility(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter),
+                visible = state.errorState.isError,
+                enter = slideInVertically { it },
+                exit = slideOutVertically { it }
+            ) {
+                val closeDialog = remember{
+                    {
+                        vm.onOrderEvent(OrderEvent.ChangeErrorState(false))
+                    }
+                }
+                val tryAgain = remember {
+                    {
+                        vm.onOrderEvent(OrderEvent.PlaceOrder)
+                        vm.onOrderEvent(OrderEvent.ChangeErrorState(false))
+                    }
+                }
+                OrderFailedDialog(
+                    message = state.errorState.message,
+                    closeDialog,
+                    tryAgain
+                )
+            }
         }
     }
 

@@ -30,6 +30,7 @@ import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.appbar.DefaultAppBar
+import com.drs.dseller.feature_products.domain.model.Product
 import com.drs.dseller.feature_products.presentation.ProductScreenFilter
 import com.drs.dseller.feature_products.presentation.ProductsEvent
 import com.drs.dseller.feature_products.presentation.ProductsViewModel
@@ -81,8 +82,8 @@ fun ProductListScreen(
         }
     }
     val addToCart = remember {
-        { productId:String ->
-
+        { product:Product ->
+            vm.onProductListEvent(ProductsEvent.AddToCart(product))
         }
     }
 

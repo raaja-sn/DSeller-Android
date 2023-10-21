@@ -122,11 +122,16 @@ fun ShoppingCartBody(
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .padding(dimensionResource(id = R.dimen.twenty_dp)),
-                buttonText = stringResource(id = R.string.cart_order_back),
-                clickCallback = placeOrder
+                buttonText = stringResource(id = R.string.cart_order_title),
+                clickCallback = placeOrder,
+                isEnabled = !state.isPlacingOrder
             )
 
-            GreenCircularProgressIndicator(isVisible = state.isPlacingOrder)
+            GreenCircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter),
+                isVisible = state.isPlacingOrder
+            )
         }
     }
 
@@ -186,7 +191,7 @@ private fun CartTotal(
 private fun getCartTotal(cartItems:List<CartProduct>):Double{
     var total = 0.0
     cartItems.forEach { 
-        total += it.price
+        total += (it.price * it.quantity)
     }
     return String.format("%.2f",total).toDouble()
 }

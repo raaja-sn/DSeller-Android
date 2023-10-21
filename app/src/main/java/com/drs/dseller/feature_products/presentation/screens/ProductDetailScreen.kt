@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.drs.dseller.core.ui_elements.appbar.AppBottomNavigationBar
 import com.drs.dseller.core.ui_elements.appbar.DefaultAppBar
 import com.drs.dseller.feature_products.presentation.ProductsDetailEvent
 import com.drs.dseller.feature_products.presentation.ProductsViewModel
@@ -28,23 +30,6 @@ fun ProductDetailScreen(
     navHostController: NavHostController,
     lifeCycleOwner:LifecycleOwner = LocalLifecycleOwner.current
 ){
-
-    DisposableEffect(key1 = lifeCycleOwner){
-        val observer = object:DefaultLifecycleObserver{
-            override fun onResume(owner: LifecycleOwner) {
-                super.onResume(owner)
-                state.productId?.let{
-                    if(state.productDetail == null && !state.productDetailLoading){
-                        vm.onProductDetailEvent(ProductsDetailEvent.GetDetailForProduct(it))
-                    }
-                }
-            }
-        }
-        lifeCycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifeCycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
 
     val navClicked:() -> Unit = remember{
         {
@@ -60,6 +45,7 @@ fun ProductDetailScreen(
     }
 
     val scrollBehavior  = TopAppBarDefaults.pinnedScrollBehavior()
+    val cartItems = state.cartFlow.collectAsStateWithLifecycle().value
 
     Scaffold(
         topBar = {
@@ -67,6 +53,12 @@ fun ProductDetailScreen(
                 scrollBehavior = scrollBehavior,
                 title = state.productDetail?.name?:"",
                 navIconClicked = navClicked
+            )
+        },
+        bottomBar = {
+            AppBottomNavigationBar(
+                cartQuantity = cartItems.size ,
+                navHostController = navHostController
             )
         }
     ) { innerPadding ->

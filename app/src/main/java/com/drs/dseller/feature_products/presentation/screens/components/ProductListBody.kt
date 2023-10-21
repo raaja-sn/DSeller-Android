@@ -23,7 +23,7 @@ fun ProductListBody(
     isTablet:Boolean = booleanResource(id = R.bool.is_tablet),
     products:LazyPagingItems<Product>,
     itemClicked:(String) -> Unit,
-    addToCart:(String) -> Unit
+    addToCart:(Product) -> Unit
 ){
     val gridState = remember{
         LazyGridState()

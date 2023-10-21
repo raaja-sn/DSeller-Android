@@ -18,9 +18,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.drs.dseller.feature_account.presentation.Account
+import com.drs.dseller.feature_home.Home
 import com.drs.dseller.feature_home.presentation.HomeViewModel
 import com.drs.dseller.feature_home.presentation.screens.HomeScreen
 import com.drs.dseller.feature_onboarding.presentation.Onboard
+import com.drs.dseller.feature_orders.presentation.Cart
 import com.drs.dseller.feature_products.presentation.Products
 import com.drs.dseller.feature_user_session.presentation.screens.SplashScreen
 import com.drs.dseller.feature_user_session.presentation.viewmodels.SplashScreenViewModel
@@ -52,17 +55,10 @@ class DSellerActivity : ComponentActivity() {
 
                         Onboard(navController = navController)
 
-                        composable("home"){
-                            val vm: HomeViewModel = it.getViewModel(navController = navController)
-
-                            HomeScreen(
-                                state = vm.homeState.value,
-                                vm,
-                                navController
-                            )
-
-                        }
-                        Products(navController)
+                        Home(navHostController =navController)
+                        Products(navHostController =navController)
+                        Cart(navHostController =navController)
+                        Account(navHostController =navController)
                     }
 
                 }

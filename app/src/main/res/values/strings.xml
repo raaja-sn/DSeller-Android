@@ -64,6 +64,12 @@
     <string name="error_title_default">Failed</string>
     <string name="error_title_error">Error</string>
 
+    <!-- Navigation -->
+    <string name="bottom_nav_icon_shop">Shop</string>
+    <string name="bottom_nav_icon_cart">Cart</string>
+    <string name="bottom_nav_icon_account">Account</string>
+
+
     <!-- dialog -->
     <string name="dialog_positive_text">OK</string>
     <string name="dialog_retry_text">Retry</string>
