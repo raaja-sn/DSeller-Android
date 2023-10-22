@@ -33,7 +33,7 @@ class CartAddProductShould {
     fun`add products to cart`(){
         val p = CartProduct(productId = "5")
         useCase.invoke(p)
-        assertEquals(repo.getCartProducts(),listOf<CartProduct>(p))
+        assertEquals(repo.getCartProducts().value,listOf<CartProduct>(p))
     }
 
     @Test

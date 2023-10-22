@@ -25,9 +25,9 @@ class CartRemoveProductShould {
 
     @Test
     fun`remove product from the cart`(){
-        assertEquals(repo.getCartProducts(), listOf(CartProduct(productId = "5")))
+        assertEquals(repo.getCartProducts().value, listOf(CartProduct(productId = "5")))
         useCase.invoke("5")
-        assertEquals(repo.getCartProducts(), listOf<CartProduct>())
+        assertEquals(repo.getCartProducts().value, listOf<CartProduct>())
     }
 
     @Test
