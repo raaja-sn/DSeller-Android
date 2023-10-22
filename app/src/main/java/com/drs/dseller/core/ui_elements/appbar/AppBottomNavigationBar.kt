@@ -190,7 +190,7 @@ private fun RowScope.BottomNavCartElement(
                 contentDescription = "Bottom Navigation Icon",
                 tint = Color.Unspecified
             )
-            if(!isSelected){
+            if(!isSelected && cartQuantity > 0){
                 Text(
                     modifier = Modifier
                         .size(20.dp)
