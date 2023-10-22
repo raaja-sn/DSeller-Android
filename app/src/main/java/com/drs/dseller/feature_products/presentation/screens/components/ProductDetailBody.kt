@@ -210,7 +210,6 @@ private fun ProductQuantityAndPrice(
     ){
         Row(
             modifier = Modifier
-                .padding(0.dp)
                 .wrapContentWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround,

@@ -10,31 +10,35 @@ import com.drs.dseller.getViewModel
 
 
 
-fun NavGraphBuilder.Products(navController:NavHostController){
+fun NavGraphBuilder.Products(navHostController:NavHostController){
     navigation(
         startDestination = "products_list/{category}",
         route = "products"
     ){
         composable(route = "products_list/{category}"){
-            val vm:ProductsViewModel = it.getViewModel(navController = navController)
+            val vm:ProductsViewModel = it.getViewModel(navController = navHostController)
 
             vm.onProductListEvent(ProductsEvent.SetProductsCategory(it.arguments?.getString("category","")?:""))
-            ProductListScreen(state = vm.productScreenState.value, vm = vm, navHostController = navController)
+            ProductListScreen(state = vm.productScreenState.value, vm = vm, navHostController = navHostController)
         }
 
         composable(route = "product_detail/{productId}"){
-            val vm:ProductsViewModel = it.getViewModel(navController = navController)
+            val vm:ProductsViewModel = it.getViewModel(navController = navHostController)
             vm.onProductDetailEvent(ProductsDetailEvent.SetProductId(it.arguments?.getString("productId","")?:""))
-            ProductDetailScreen(state = vm.productDetailState.value, vm = vm, navHostController = navController)
+            ProductDetailScreen(state = vm.productDetailState.value, vm = vm, navHostController = navHostController)
         }
 
     }
 }
 
 fun NavHostController.toProductDetail(productId:String){
-    navigate("product_detail/$productId")
+    navigate("$DESTINATION_PRODUCT_DETAIL/$productId")
 }
 
 fun NavHostController.toProducts(category:String){
-    navigate("products_list/$category")
+    navigate("$DESTINATION_PRODUCTS_LIST/$category")
 }
+
+const val ROUTE_PRODUCTS = "products"
+const val DESTINATION_PRODUCTS_LIST = "products_list"
+const val DESTINATION_PRODUCT_DETAIL = "product_detail"

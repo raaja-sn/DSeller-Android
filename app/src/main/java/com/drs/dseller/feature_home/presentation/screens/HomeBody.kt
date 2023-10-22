@@ -97,7 +97,7 @@ fun HomeBody(
 
         LazyVerticalGrid(
             modifier = Modifier
-                .padding(bottom = dimensionResource(id = R.dimen.fifty_fifty_dp)),
+                ,
             columns = GridCells.Fixed(2)
         ){
             item(

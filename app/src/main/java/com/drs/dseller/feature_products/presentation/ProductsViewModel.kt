@@ -30,7 +30,11 @@ class ProductsViewModel @Inject constructor(
     private val _productScreenState = mutableStateOf(ProductScreenState())
     val productScreenState:State<ProductScreenState> = _productScreenState
 
-    private val _productDetailState = mutableStateOf(ProductDetailState())
+    private val _productDetailState = mutableStateOf(
+        ProductDetailState(
+            cartFlow = cartUseCases.getAllProducts()
+        )
+    )
     val productDetailState:State<ProductDetailState> = _productDetailState
 
     fun onProductListEvent(event:ProductsEvent){
@@ -68,14 +72,26 @@ class ProductsViewModel @Inject constructor(
             is ProductsDetailEvent.GetDetailForProduct -> getProductDetail(event.productId)
             is ProductsDetailEvent.AddToCart ->{
                 productDetailState.value.productDetail?.let{
+                    if(cartUseCases.hasProduct(it.productId)){
+                        _productDetailState.value = _productDetailState.value.copy(
+                            productInfo = ProductInfoState(
+                                showInfoState = true,
+                                info = "Product already added to cart. Would you like to add again?"
+                            )
+                        )
+                        return
+                    }
                     addProductToCart(event.quantity,it)
                 }
             }
 
             is ProductsDetailEvent.SetProductId -> {
-                _productDetailState.value = _productDetailState.value.copy(
-                    productId = event.productId
-                )
+                if(_productDetailState.value.productId != event.productId){
+                    _productDetailState.value = _productDetailState.value.copy(
+                        productId = event.productId
+                    )
+                    getProductDetail(event.productId)
+                }
             }
 
             is ProductsDetailEvent.UpdateProductQuantity -> {
@@ -120,16 +136,14 @@ class ProductsViewModel @Inject constructor(
      */
     private fun addListProductToCart(listProduct:Product){
         if(cartUseCases.hasProduct(listProduct.productId)){
-            cartUseCases.incrementQuantity(
-                cartUseCases.getProduct(listProduct.productId).quantity+1,
-                listProduct.productId
-            )
+            cartUseCases.incrementQuantity(1, listProduct.productId)
         }else{
             cartUseCases.addProduct(CartProduct(
                 productName = listProduct.name,
                 productId = listProduct.productId,
                 quantity = 1,
-                price = listProduct.price
+                price = listProduct.price,
+                productImage = getProductImageUrl(listProduct.productPictures)
             ))
         }
         _productScreenState.value = _productScreenState.value.copy(
@@ -147,8 +161,9 @@ class ProductsViewModel @Inject constructor(
             CartProduct(
                 productName = product.name,
                 productId = product.productId,
-                quantity = 1,
-                price = product.price
+                quantity = quantity,
+                price = product.price,
+                productImage = getProductImageUrl(product.productPictures)
             )
         )
         _productDetailState.value = _productDetailState.value.copy(
@@ -163,7 +178,7 @@ class ProductsViewModel @Inject constructor(
      */
     private fun updateQuantityOfProductInCart(quantity:Int,product: ProductDetail){
         cartUseCases.incrementQuantity(
-            cartUseCases.getProduct(product.productId).quantity+1,
+            quantity,
             product.productId
         )
         _productDetailState.value = _productDetailState.value.copy(
@@ -171,6 +186,11 @@ class ProductsViewModel @Inject constructor(
                 info = "${product.name} added to cart"
             )
         )
+    }
+
+    private fun getProductImageUrl(pImages:List<String>):String{
+        if(pImages.isEmpty())return ""
+        return pImages[0]
     }
 
     private fun listProducts(){

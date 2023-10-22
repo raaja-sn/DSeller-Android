@@ -9,6 +9,6 @@ interface ShoppingOrderService {
     @POST("order")
     suspend fun placeOrder(
         @Body order:ShoppingOrder
-    ):Response<Nothing>
+    ):Response<ShoppingOrder>
 
 }

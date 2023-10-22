@@ -3,4 +3,7 @@
     <dimen name="product_card_width">120dp</dimen>
     <dimen name="product_card_height">187dp</dimen>
     <dimen name="product_img_size">82dp</dimen>
+    <dimen name="cart_product_image_size">70dp</dimen>
+
+
 </resources>

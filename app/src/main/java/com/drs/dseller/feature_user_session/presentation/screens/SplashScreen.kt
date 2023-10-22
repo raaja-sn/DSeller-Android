@@ -1,5 +1,6 @@
 package com.drs.dseller.feature_user_session.presentation.screens
 
+import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -20,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,6 +34,7 @@ import androidx.navigation.NavHostController
 import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.dialog.DefaultBottomDialog
 import com.drs.dseller.core.ui_elements.fonts.appFonts
+import com.drs.dseller.feature_home.toHome
 import com.drs.dseller.feature_products.presentation.toProducts
 import com.drs.dseller.feature_user_session.onBoardUser
 import com.drs.dseller.feature_user_session.presentation.states.SplashScreenState
@@ -45,6 +49,7 @@ fun SplashScreen(
     navController:NavHostController
 ){
 
+
     val moveToSignIn = remember{
         {
             navController.onBoardUser()
@@ -53,8 +58,7 @@ fun SplashScreen(
 
     val moveToHome = remember{
         {
-            //navController.toHome()
-            navController.toProducts("Electronics")
+           navController.toHome()
         }
     }
 
@@ -92,6 +96,12 @@ fun SplashScreen(
     DisplaySignIn(shouldSignIn = state.shouldSignIn,moveToSignIn)
 
     DisplayHome(state.user != null ,moveToHome)
+
+    if(state.shouldSignIn || state.user != null){
+        ChangeStatusBarColor(Color.White)
+    }else{
+        ChangeStatusBarColor(Green40)
+    }
 
 }
 
@@ -156,6 +166,12 @@ fun SplashScreenBody(
             )
         }
     }
+}
+
+@Composable
+private fun ChangeStatusBarColor(color:Color){
+    val activity = (LocalView.current.context) as Activity
+    activity.window.statusBarColor = color.toArgb()
 }
 
 @Preview

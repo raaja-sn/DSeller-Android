@@ -19,6 +19,7 @@ class CartMock{
                 mock(),
                 mock(),
                 mock(),
+                mock()
             )
         )
     }

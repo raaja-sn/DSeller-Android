@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import com.drs.dseller.BaseTest
 import com.drs.dseller.cart.CartMock
 import com.drs.dseller.core.constants.AppConstants
+import com.drs.dseller.core.domain.model.shopping_cart.CartProduct
 import com.drs.dseller.core.domain.usecases.shopping_cart_use_cases.ShoppingCartUseCases
 import com.drs.dseller.feature_products.domain.model.ProductDetail
 import com.drs.dseller.feature_products.domain.model.ProductSearchFilter
@@ -13,6 +14,7 @@ import com.drs.dseller.feature_products.presentation.ProductsEvent
 import com.drs.dseller.feature_products.presentation.ProductsViewModel
 import com.drs.dseller.feature_products.response.ProductResponse
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -30,6 +32,7 @@ class ProductsViewModelShould : BaseTest() {
     private lateinit var vm:ProductsViewModel
     private lateinit var productMock:ProductMocks
     private lateinit var cartMock:CartMock
+    private lateinit var products:List<CartProduct>
 
     @Before
     fun init(){
@@ -37,6 +40,10 @@ class ProductsViewModelShould : BaseTest() {
         productUseCases = productMock.getUseCases()
         cartMock = CartMock()
         cartUseCases = cartMock.getUseCases()
+        products = cartMock.getMockCartProducts()
+        whenever(cartUseCases.getAllProducts.invoke()).thenReturn(
+            MutableStateFlow(products)
+        )
         vm = ProductsViewModel(productUseCases,cartUseCases)
     }
 

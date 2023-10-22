@@ -48,10 +48,10 @@ fun ProductElement(
     product:Product,
     placeHolderImageId:Int = R.drawable.place_holder_medium,
     productClicked:(String) -> Unit,
-    addToCart:(String) -> Unit
+    addToCart:(Product) -> Unit
 ){
     val interactionSource = remember{ MutableInteractionSource() }
-    val cardModifier = remember{
+    val cardModifier = remember(product.productId){
         Modifier
             .wrapContentSize()
             .width(cardWidth)
@@ -67,7 +67,7 @@ fun ProductElement(
             .padding(start = 10.dp, end = 15.dp)
             .clip(RoundedCornerShape(35))
             .clickable {
-                addToCart(product.productId)
+                addToCart(product)
             }
     }
 

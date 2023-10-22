@@ -1,7 +1,9 @@
 package com.drs.dseller.feature_products.domain.model
 
+import com.google.gson.annotations.SerializedName
+
 data class ProductDetail(
-    val productId:String = "",
+    @SerializedName("_id")val productId:String = "",
     val name:String = "",
     val category:String = "",
     val subCategory:String = "",

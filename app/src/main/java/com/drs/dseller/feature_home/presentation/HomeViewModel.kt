@@ -1,9 +1,11 @@
 package com.drs.dseller.feature_home.presentation
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.drs.dseller.core.domain.usecases.shopping_cart_use_cases.ShoppingCartUseCases
 import com.drs.dseller.feature_home.domain.usecases.HomeUseCases
 import com.drs.dseller.feature_home.presentation.states.HomeErrorState
 import com.drs.dseller.feature_home.presentation.states.HomeState
@@ -14,10 +16,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeUseCases:HomeUseCases
+    private val homeUseCases:HomeUseCases,
+    cartUseCases: ShoppingCartUseCases
 ):ViewModel(){
 
-    private val _homeState = mutableStateOf(HomeState())
+    private val _homeState = mutableStateOf(
+        HomeState(
+            cartFlow = cartUseCases.getAllProducts.invoke()
+        )
+    )
     val homeState: State<HomeState> = _homeState
 
     fun onEvent(event: HomeEvent){

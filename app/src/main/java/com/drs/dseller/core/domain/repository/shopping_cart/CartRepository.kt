@@ -1,5 +1,7 @@
 package com.drs.dseller.core.domain.repository.shopping_cart
 
+import kotlinx.coroutines.flow.StateFlow
+
 
 /**
  * Repository interface fo the shopping cart
@@ -66,6 +68,11 @@ interface CartRepository<P> {
      *
      * @return List of products [P]
      */
-    fun getCartProducts():List<P>
+    fun getCartProducts():StateFlow<List<P>>
+
+    /**
+     * Clear the shopping cart
+     */
+    fun clearCart()
 
 }

@@ -1,11 +1,15 @@
 package com.drs.dseller.feature_home
 
 import com.drs.dseller.BaseTest
+import com.drs.dseller.cart.CartMock
+import com.drs.dseller.core.domain.model.shopping_cart.CartProduct
+import com.drs.dseller.core.domain.usecases.shopping_cart_use_cases.ShoppingCartUseCases
 import com.drs.dseller.feature_home.domain.usecases.HomeUseCases
 import com.drs.dseller.feature_home.presentation.HomeEvent
 import com.drs.dseller.feature_home.presentation.HomeViewModel
 import com.drs.dseller.feature_home.response.HomeResponse
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -17,12 +21,21 @@ import org.mockito.kotlin.whenever
 class HomeViewModelShould : BaseTest() {
 
     private lateinit var useCases: HomeUseCases
+    private lateinit var cartUseCases:ShoppingCartUseCases
     private lateinit var vm:HomeViewModel
+    private lateinit var cartMocks: CartMock
+    private lateinit var products:List<CartProduct>
 
     @Before
     fun init(){
         useCases = HomeMocks.getUseCases()
-        vm = HomeViewModel(useCases)
+        cartUseCases = CartMock().getUseCases()
+        cartMocks = CartMock()
+        products = cartMocks.getMockCartProducts()
+        whenever(cartUseCases.getAllProducts.invoke()).thenReturn(
+            MutableStateFlow(products)
+        )
+        vm = HomeViewModel(useCases,cartUseCases)
     }
 
     @Test

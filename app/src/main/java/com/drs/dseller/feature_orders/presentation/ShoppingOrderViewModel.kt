@@ -19,20 +19,29 @@ class ShoppingOrderViewModel @Inject constructor(
     private val orderUseCases:OrdersUseCases
 ):ViewModel(){
 
-    private val _cartScreenState = mutableStateOf(CartState())
+    private val _cartScreenState = mutableStateOf(getInitialState())
     val cartScreenState: State<CartState> = _cartScreenState
+
+    private fun getInitialState():CartState{
+        val cartFlow = cartUseCases.getAllProducts()
+        return CartState(
+            cartFlow = cartFlow,
+            cartItems = cartFlow.value
+        )
+    }
 
     fun onCartEvent(event:CartEvent){
         when(event){
             is CartEvent.DecrementProductQuantity -> {
-                cartUseCases.decrementQuantity(event.quantity-1,event.productId)
+                if(cartUseCases.getProduct(event.productId).quantity == 1)return
+                cartUseCases.decrementQuantity(1,event.productId)
                 updateCartState()
             }
             CartEvent.GetCartProducts -> {
                 updateCartState()
             }
             is CartEvent.IncrementProductQuantity -> {
-                cartUseCases.decrementQuantity(event.quantity+1,event.productId)
+                cartUseCases.incrementQuantity(1,event.productId)
                 updateCartState()
             }
             is CartEvent.RemoveProductFromCart -> {
@@ -66,7 +75,7 @@ class ShoppingOrderViewModel @Inject constructor(
 
     private fun updateCartState(){
         _cartScreenState.value = _cartScreenState.value.copy(
-            cartItems = cartUseCases.getAllProducts()
+            cartItems = cartUseCases.getAllProducts().value
         )
     }
 
@@ -75,7 +84,7 @@ class ShoppingOrderViewModel @Inject constructor(
             _cartScreenState.value = _cartScreenState.value.copy(
                 isPlacingOrder = true
             )
-            when(val r = orderUseCases.placeOrder(cartUseCases.getAllProducts())){
+            when(val r = orderUseCases.placeOrder(cartUseCases.getAllProducts().value)){
                 is ShoppingOrderResponse.Error -> {
                     _cartScreenState.value = _cartScreenState.value.copy(
                         isPlacingOrder = false,
@@ -86,9 +95,11 @@ class ShoppingOrderViewModel @Inject constructor(
                     )
                 }
                 is ShoppingOrderResponse.Success -> {
+                    cartUseCases.clearCart()
                     _cartScreenState.value = _cartScreenState.value.copy(
                         isPlacingOrder = false,
-                        isOrderComplete = true
+                        isOrderComplete = true,
+                        cartItems = cartUseCases.getAllProducts().value
                     )
                 }
             }
@@ -122,12 +133,12 @@ sealed class CartEvent{
     /**
      * Increment a products quantity added to the cart
      */
-    data class IncrementProductQuantity(val productId:String, val quantity:Int):CartEvent()
+    data class IncrementProductQuantity(val productId:String):CartEvent()
 
     /**
      * Decrement a products quantity added to the cart
      */
-    data class DecrementProductQuantity(val productId:String, val quantity:Int):CartEvent()
+    data class DecrementProductQuantity(val productId:String):CartEvent()
 
     /**
      * Remove a product from the cart
