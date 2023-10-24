@@ -15,7 +15,8 @@ interface SessionRepository<R> {
     /**
      * Login a user
      *
+     * @param shouldInvalidate Invalidate user to get the latest user info
      * @return [R] The logged user
      */
-    suspend fun getUser():R
+    suspend fun getUser(shouldInvalidate:Boolean):R
 }

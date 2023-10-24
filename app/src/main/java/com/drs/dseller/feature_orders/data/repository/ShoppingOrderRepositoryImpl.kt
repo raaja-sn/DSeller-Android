@@ -39,7 +39,7 @@ class ShoppingOrderRepositoryImpl(
     }
 
     private suspend fun getCurrentUser():AppUser{
-        return when(val r = userSessionRepo.getUser()){
+        return when(val r = userSessionRepo.getUser(false)){
             is SessionResponse.Error -> {
                 throw(Exception(r.message))
             }

@@ -40,7 +40,6 @@ class DSellerActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color.White
                 ) {
 
                     val navController = rememberNavController()

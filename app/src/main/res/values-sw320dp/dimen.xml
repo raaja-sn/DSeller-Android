@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="category_card_width">145dp</dimen>
+    <dimen name="category_card_height">156dp</dimen>
+    <dimen name="category_img_size">101dp</dimen>
+    <dimen name="category_card_text_size">13sp</dimen>
 
     <dimen name="product_card_width">160dp</dimen>
     <dimen name="product_card_height">250dp</dimen>

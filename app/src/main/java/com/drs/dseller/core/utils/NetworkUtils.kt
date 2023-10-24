@@ -1,7 +1,7 @@
 package com.drs.dseller.core.utils
 
 import com.drs.dseller.core.network.ErrorResponse
-import com.drs.dseller.core.network.toNetworkErrorResponse
+import com.drs.dseller.core.network.toErrorResponse
 import okhttp3.ResponseBody
 
 class NetworkUtils {
@@ -15,7 +15,7 @@ class NetworkUtils {
          * @return [ErrorResponse] the parsed object
          */
         fun parseErrorResponse(body:ResponseBody?):ErrorResponse{
-            return body?.string()?.toNetworkErrorResponse()?:
+            return body?.string()?.toErrorResponse()?:
             ErrorResponse("2","Unknown Error")
         }
     }

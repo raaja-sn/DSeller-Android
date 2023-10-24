@@ -7,19 +7,28 @@ import com.drs.dseller.core.constants.AppConstants
 import com.drs.dseller.core.domain.model.AppUser
 import com.drs.dseller.core.domain.repository.SessionRepository
 import com.drs.dseller.core.response.SessionResponse
-import java.lang.Exception
+import kotlin.Exception
 
 class SessionRepositoryImpl : SessionRepository<SessionResponse<AppUser>> {
 
     private var appUser:AppUser? = null
 
     override suspend fun logoutUser(): SessionResponse<AppUser> {
-        TODO("Not yet implemented")
+        return try{
+            Amplify.Auth.signOut()
+            SessionResponse.Success(AppUser())
+        }catch(e:Exception){
+            SessionResponse.Error(e.message?:"")
+        }
     }
 
-    override suspend fun getUser(): SessionResponse<AppUser> {
+    override suspend fun getUser(shouldInvalidate:Boolean): SessionResponse<AppUser> {
         return appUser?.let {
-            SessionResponse.Success(it)
+            if(shouldInvalidate){
+                getUserFromAwsSession()
+            }else{
+                SessionResponse.Success(it)
+            }
         }?: getUserFromAwsSession()
 
     }
@@ -38,13 +47,15 @@ class SessionRepositoryImpl : SessionRepository<SessionResponse<AppUser>> {
                 if(attrs.key == AuthUserAttributeKey.custom(AppConstants.D_SELLER_USER_ID_ATTRIBUTE_KEY)) dsellerId = attrs.value
 
             }
+            val user = AppUser(
+                fullName,
+                email,
+                phoneNumber,
+                dsellerId
+            )
+            appUser = user
             SessionResponse.Success(
-                AppUser(
-                    fullName,
-                    email,
-                    phoneNumber,
-                    dsellerId
-                )
+                user
             )
         }catch(e:Exception){
             when(e){

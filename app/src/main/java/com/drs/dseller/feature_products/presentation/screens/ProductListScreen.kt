@@ -110,6 +110,7 @@ fun ProductListScreen(
 
         ProductListBody(
             modifier = Modifier
+                .background(Color.White)
                 .padding(innerPadding)
                 .padding(horizontal = dimensionResource(id = R.dimen.five_dp)),
             products = products,

@@ -2,6 +2,7 @@
 
 package com.drs.dseller.feature_products.presentation.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -28,7 +30,6 @@ fun ProductDetailScreen(
     state:ProductDetailState,
     vm:ProductsViewModel,
     navHostController: NavHostController,
-    lifeCycleOwner:LifecycleOwner = LocalLifecycleOwner.current
 ){
 
     val navClicked:() -> Unit = remember{
@@ -64,6 +65,7 @@ fun ProductDetailScreen(
     ) { innerPadding ->
         Column(
             modifier = Modifier
+                .background(Color.White)
                 .padding(innerPadding)
         ) {
             ProductDetailBody(

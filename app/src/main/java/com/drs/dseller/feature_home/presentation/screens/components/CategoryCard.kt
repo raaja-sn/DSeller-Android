@@ -3,6 +3,7 @@
 package com.drs.dseller.feature_home.presentation.screens.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,10 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.drs.dseller.R
@@ -67,10 +70,16 @@ fun CategoryCard(
             error = painterResource(id = placeHolderId),
             contentScale = ContentScale.Crop
         )
+        Spacer(
+            modifier = Modifier
+                .weight(1f)
+        )
         Text(
             modifier = textModifier,
             text = category,
-            style = AppTypography.titleMedium,
+            style = AppTypography.titleMedium.copy(
+                fontSize = dimensionResource(id = R.dimen.category_card_text_size).value.sp
+            ),
             color = Black80,
             textAlign = TextAlign.Center,
             maxLines = 2

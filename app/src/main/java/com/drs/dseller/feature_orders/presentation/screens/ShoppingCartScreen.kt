@@ -95,6 +95,7 @@ fun ShoppingCartScreen(
     ) { it ->
         Box(
             modifier = Modifier
+                .background(Color.White)
                 .padding(it)
         ){
             ShoppingCartBody(

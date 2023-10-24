@@ -93,11 +93,10 @@ fun HomeBody(
             )
         val textModifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 20.dp)
+            .padding(horizontal = 10.dp, vertical = 15.dp)
 
         LazyVerticalGrid(
-            modifier = Modifier
-                ,
+            modifier = Modifier,
             columns = GridCells.Fixed(2)
         ){
             item(
