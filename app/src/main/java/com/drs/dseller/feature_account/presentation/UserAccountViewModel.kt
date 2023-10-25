@@ -42,12 +42,10 @@ class UserAccountViewModel @Inject constructor(
     private val _userInvoiceState = mutableStateOf(UserInvoiceState())
     val userInvoiceState:State<UserInvoiceState> = _userInvoiceState
 
-    private val _appBarState = mutableStateOf(AccountAppBarState())
-    val appBarState:State<AccountAppBarState> = _appBarState
-
     private val _bottomNavigationState = mutableStateOf(AccountBottomNavigationBarState(
         cartFlow = cartUseCases.getAllProducts()
     ))
+    val bottomNavigationBarState:State<AccountBottomNavigationBarState> = _bottomNavigationState
 
     fun onUserAccountEvent(event:UserAccountEvent){
         when(event){

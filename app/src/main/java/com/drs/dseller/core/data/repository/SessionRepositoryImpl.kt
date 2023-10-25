@@ -16,6 +16,7 @@ class SessionRepositoryImpl : SessionRepository<SessionResponse<AppUser>> {
     override suspend fun logoutUser(): SessionResponse<AppUser> {
         return try{
             Amplify.Auth.signOut()
+            appUser = null
             SessionResponse.Success(AppUser())
         }catch(e:Exception){
             SessionResponse.Error(e.message?:"")

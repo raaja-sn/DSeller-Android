@@ -105,7 +105,8 @@ fun ProductListScreen(
                 actionResId = R.drawable.ic_filter,
                 actionClicked = filterIconClicked
             )
-        }
+        },
+        containerColor = Color.White
     ){ innerPadding ->
 
         ProductListBody(

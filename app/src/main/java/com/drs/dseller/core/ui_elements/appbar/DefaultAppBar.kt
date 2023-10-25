@@ -30,7 +30,7 @@ fun DefaultAppBar(
     scrollBehavior:TopAppBarScrollBehavior,
     iconResId:Int = R.drawable.ic_arrow_left,
     title:String,
-    navIconClicked:()->Unit,
+    navIconClicked:(()->Unit)?,
     actionResId:Int? = null,
     actionClicked:(()->Unit) = {  },
 ){
@@ -44,15 +44,17 @@ fun DefaultAppBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = navIconClicked) {
-                Icon(
-                    modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.fourty_dp))
-                        .padding(dimensionResource(id = R.dimen.ten_dp)),
-                    painter = painterResource(id = iconResId),
-                    contentDescription = stringResource(id = R.string.description_app_bar_back),
-                    tint = Color.Unspecified
+            navIconClicked?.let {
+                IconButton(onClick = navIconClicked) {
+                    Icon(
+                        modifier = Modifier
+                            .size(dimensionResource(id = R.dimen.fourty_dp))
+                            .padding(dimensionResource(id = R.dimen.ten_dp)),
+                        painter = painterResource(id = iconResId),
+                        contentDescription = stringResource(id = R.string.description_app_bar_back),
+                        tint = Color.Unspecified
                     )
+                }
             }
         },
         actions = {
