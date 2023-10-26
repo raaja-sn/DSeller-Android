@@ -1,4 +1,4 @@
-package com.drs.dseller.feature_home.presentation.screens.components
+package com.drs.dseller.feature_home.presentation.screens.home
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable

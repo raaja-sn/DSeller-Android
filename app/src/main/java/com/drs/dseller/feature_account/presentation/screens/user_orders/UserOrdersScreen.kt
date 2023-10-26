@@ -1,10 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.drs.dseller.feature_account.presentation.screens
+package com.drs.dseller.feature_account.presentation.screens.user_orders
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
@@ -21,34 +18,34 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.appbar.AppBottomNavigationBar
 import com.drs.dseller.core.ui_elements.appbar.DefaultAppBar
-import com.drs.dseller.feature_account.presentation.UserAccountEvent
 import com.drs.dseller.feature_account.presentation.UserAccountViewModel
 import com.drs.dseller.feature_account.presentation.UserOrdersEvent
-import com.drs.dseller.feature_account.presentation.screens.components.AccountScreenBody
-import com.drs.dseller.feature_account.presentation.screens.components.UserOrdersBody
 import com.drs.dseller.feature_account.presentation.states.AccountBottomNavigationBarState
-import com.drs.dseller.feature_account.presentation.states.AccountScreenState
-import com.drs.dseller.feature_account.presentation.toUserOrders
-import com.drs.dseller.feature_onboarding.presentation.toLogInAfterLogout
+import com.drs.dseller.feature_account.presentation.states.UserOrdersState
+import com.drs.dseller.feature_account.presentation.toInvoice
 
 @Composable
-fun AccountScreen(
-    lifecycleOwner:LifecycleOwner = LocalLifecycleOwner.current,
-    state:AccountScreenState,
+fun UserOrdersScreen(
+    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
+    state:UserOrdersState,
     bottomNavState:AccountBottomNavigationBarState,
     vm:UserAccountViewModel,
     navHostController: NavHostController
 ){
 
+    val ordersList = state.userOrders.collectAsLazyPagingItems()
+
     DisposableEffect(key1 = lifecycleOwner){
-        val observer = object: DefaultLifecycleObserver {
+        val observer = object:DefaultLifecycleObserver{
             override fun onResume(owner: LifecycleOwner) {
                 super.onResume(owner)
-                if(state.user != null) return
-                vm.onUserAccountEvent(UserAccountEvent.GetAccountUser)
+                if(ordersList.itemCount == 0){
+                    vm.onOrdersEvent(UserOrdersEvent.ListOrders)
+                }
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -58,33 +55,15 @@ fun AccountScreen(
         }
     }
 
-    val myOrdersClicked = remember {
-        {
-            navHostController.toUserOrders(navHostController)
+    val orderClicked = remember {
+        {orderId:String ->
+            navHostController.toInvoice(orderId)
         }
     }
 
-    val myDetailsClicked = remember {
+    val backPressed:() -> Unit = remember{
         {
-
-        }
-    }
-
-    val aboutClicked = remember {
-        {
-
-        }
-    }
-
-    val logout = remember {
-        {
-            vm.onUserAccountEvent(UserAccountEvent.LogOutUser)
-        }
-    }
-
-    val displayLogin = remember{
-        {
-            navHostController.toLogInAfterLogout()
+            navHostController.popBackStack()
         }
     }
 
@@ -92,8 +71,14 @@ fun AccountScreen(
     val appScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
-        modifier = androidx.compose.ui.Modifier
+        modifier = Modifier
             .nestedScroll(appScrollBehavior.nestedScrollConnection),
+        topBar = {
+            DefaultAppBar(
+                scrollBehavior = appScrollBehavior,
+                title = stringResource(id = R.string.account_order),
+                navIconClicked = backPressed)
+        },
         bottomBar = {
             AppBottomNavigationBar(
                 cartQuantity = cartItems.size,
@@ -102,25 +87,11 @@ fun AccountScreen(
         },
         containerColor = Color.White
     ) { innerPadding ->
-
-        AccountScreenBody(
+        UserOrdersBody(
             innerPadding = innerPadding,
-            state = state,
-            myDetailClicked = myDetailsClicked,
-            myOrdersClicked = myOrdersClicked,
-            aboutClicked = aboutClicked,
-            logoutClicked = logout
-            )
+            orders = ordersList,
+            orderClicked = orderClicked)
     }
 
-    DisplayLogin(state.logoutComplete,displayLogin)
-}
 
-@Composable
-private fun DisplayLogin(
-    logoutComplete:Boolean,
-    displayLogin:() -> Unit
-){
-    if(!logoutComplete) return
-    displayLogin()
 }

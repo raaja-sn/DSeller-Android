@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -34,6 +35,7 @@ fun DefaultTextField(
     fieldText:String = "",
     enabled:Boolean = true,
     keyboardType:KeyboardType,
+    imeAction: ImeAction = ImeAction.Next,
     editListener:(String) -> Unit,
 ){
 
@@ -66,7 +68,7 @@ fun DefaultTextField(
             }
         },
         interactionSource = interactionSource,
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction)
     ){
         TextFieldDefaults.DecorationBox(
             value = fieldText,

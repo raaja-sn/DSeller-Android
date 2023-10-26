@@ -4,9 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.drs.dseller.core.navigation.getViewModel
 import com.drs.dseller.feature_home.presentation.HomeViewModel
-import com.drs.dseller.feature_home.presentation.screens.HomeScreen
-import com.drs.dseller.getViewModel
+import com.drs.dseller.feature_home.presentation.screens.home.HomeScreen
 
 
 fun NavGraphBuilder.Home(navHostController: NavHostController){

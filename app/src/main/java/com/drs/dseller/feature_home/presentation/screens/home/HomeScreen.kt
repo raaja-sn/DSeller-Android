@@ -1,30 +1,22 @@
-package com.drs.dseller.feature_home.presentation.screens
+package com.drs.dseller.feature_home.presentation.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.appbar.AppBottomNavigationBar
 import com.drs.dseller.feature_home.presentation.HomeEvent
 import com.drs.dseller.feature_home.presentation.HomeViewModel
-import com.drs.dseller.feature_home.presentation.screens.components.OfferImage
 import com.drs.dseller.feature_home.presentation.states.HomeState
 import com.drs.dseller.feature_products.presentation.toProducts
 

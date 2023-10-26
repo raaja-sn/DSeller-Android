@@ -1,4 +1,4 @@
-package com.drs.dseller.feature_products.presentation.screens.components
+package com.drs.dseller.feature_products.presentation.screens.product_list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -186,7 +186,7 @@ private fun SortType(
 }
 
 @Composable
-private fun getSortTitle(sortType:SortType):String{
+private fun getSortTitle(sortType: SortType):String{
     return when(sortType){
         SortType.ByNameAscending -> stringResource(id = R.string.product_filter_name_asc)
         SortType.ByNameDescending -> stringResource(id = R.string.product_filter_name_desc)
@@ -196,12 +196,12 @@ private fun getSortTitle(sortType:SortType):String{
 }
 
 private sealed class SortType{
-    data object ByNameAscending:SortType()
-    data object ByNameDescending:SortType()
+    data object ByNameAscending: SortType()
+    data object ByNameDescending: SortType()
 
-    data object ByPriceAscending:SortType()
+    data object ByPriceAscending: SortType()
 
-    data object ByPriceDescending:SortType()
+    data object ByPriceDescending: SortType()
 
 }
 

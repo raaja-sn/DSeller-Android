@@ -4,9 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.drs.dseller.feature_orders.presentation.screens.OrderSuccessScreen
-import com.drs.dseller.feature_orders.presentation.screens.ShoppingCartScreen
-import com.drs.dseller.getViewModel
+import com.drs.dseller.core.navigation.getViewModel
+import com.drs.dseller.feature_orders.presentation.screens.order_success.OrderSuccessScreen
+import com.drs.dseller.feature_orders.presentation.screens.shopping_cart.ShoppingCartScreen
 
 
 fun NavGraphBuilder.Cart(navHostController: NavHostController){

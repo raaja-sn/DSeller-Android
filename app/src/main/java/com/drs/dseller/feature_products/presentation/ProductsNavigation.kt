@@ -4,10 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.drs.dseller.feature_products.presentation.screens.ProductDetailScreen
-import com.drs.dseller.feature_products.presentation.screens.ProductListScreen
-import com.drs.dseller.getViewModel
-
+import com.drs.dseller.core.navigation.getViewModel
+import com.drs.dseller.feature_products.presentation.screens.product_detail.ProductDetailScreen
+import com.drs.dseller.feature_products.presentation.screens.product_list.ProductListScreen
 
 
 fun NavGraphBuilder.Products(navHostController:NavHostController){

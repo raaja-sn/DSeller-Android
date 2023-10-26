@@ -1,10 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.drs.dseller.feature_account.presentation.screens
+package com.drs.dseller.feature_account.presentation.screens.invoice
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
@@ -21,66 +18,57 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.appbar.AppBottomNavigationBar
 import com.drs.dseller.core.ui_elements.appbar.DefaultAppBar
 import com.drs.dseller.feature_account.presentation.UserAccountViewModel
-import com.drs.dseller.feature_account.presentation.UserOrdersEvent
-import com.drs.dseller.feature_account.presentation.screens.components.UserOrdersBody
+import com.drs.dseller.feature_account.presentation.UserInvoiceEvent
+import com.drs.dseller.feature_account.presentation.screens.invoice.InvoiceBody
 import com.drs.dseller.feature_account.presentation.states.AccountBottomNavigationBarState
-import com.drs.dseller.feature_account.presentation.states.UserOrdersState
+import com.drs.dseller.feature_account.presentation.states.UserInvoiceState
 
 @Composable
-fun UserOrdersScreen(
+fun InvoiceScreen(
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
-    state:UserOrdersState,
+    state:UserInvoiceState,
     bottomNavState:AccountBottomNavigationBarState,
     vm:UserAccountViewModel,
     navHostController: NavHostController
 ){
-
-    val ordersList = state.userOrders.collectAsLazyPagingItems()
-
     DisposableEffect(key1 = lifecycleOwner){
+
         val observer = object:DefaultLifecycleObserver{
             override fun onResume(owner: LifecycleOwner) {
                 super.onResume(owner)
-                if(ordersList.itemCount == 0){
-                    vm.onOrdersEvent(UserOrdersEvent.ListOrders)
-                }
+                if(state.invoice != null) return
+                vm.onUserInvoiceEvent(UserInvoiceEvent.GetInvoice)
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
-
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 
-    val orderClicked = remember {
-        {orderId:String ->
 
-        }
-    }
-
-    val backPressed:() -> Unit = remember{
+    val navBackClicked:()->Unit = remember {
         {
             navHostController.popBackStack()
         }
     }
 
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val cartItems = bottomNavState.cartFlow.collectAsStateWithLifecycle().value
-    val appScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         modifier = Modifier
-            .nestedScroll(appScrollBehavior.nestedScrollConnection),
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             DefaultAppBar(
-                scrollBehavior = appScrollBehavior,
-                title = stringResource(id = R.string.account_order),
-                navIconClicked = backPressed)
+                scrollBehavior = scrollBehavior ,
+                title = stringResource(id = R.string.account_invoice),
+                navIconClicked = navBackClicked
+            )
         },
         bottomBar = {
             AppBottomNavigationBar(
@@ -90,11 +78,11 @@ fun UserOrdersScreen(
         },
         containerColor = Color.White
     ) { innerPadding ->
-        UserOrdersBody(
-            innerPadding = innerPadding,
-            orders = ordersList,
-            orderClicked = orderClicked)
-    }
 
+        InvoiceBody(
+            innerPadding = innerPadding,
+            state = state
+        )
+    }
 
 }

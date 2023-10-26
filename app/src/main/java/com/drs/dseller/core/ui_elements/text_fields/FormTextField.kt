@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.drs.dseller.R
@@ -21,6 +22,7 @@ fun FormTextField(
     enabled:Boolean = true,
     fieldText:String,
     keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Next,
     textChangeCallback:(String) -> Unit
 ){
     Column(
@@ -39,6 +41,7 @@ fun FormTextField(
             fieldText,
             enabled,
             keyboardType,
+            imeAction,
             textChangeCallback
         )
     }

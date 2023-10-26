@@ -1,4 +1,4 @@
-package com.drs.dseller.feature_orders.presentation.screens
+package com.drs.dseller.feature_orders.presentation.screens.shopping_cart
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -8,7 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -40,7 +39,6 @@ import com.drs.dseller.core.ui_elements.buttons.RoundCorneredButton
 import com.drs.dseller.feature_orders.presentation.CartEvent
 import com.drs.dseller.feature_orders.presentation.OrderEvent
 import com.drs.dseller.feature_orders.presentation.ShoppingOrderViewModel
-import com.drs.dseller.feature_orders.presentation.screens.components.ShoppingCartBody
 import com.drs.dseller.feature_orders.presentation.states.CartState
 import com.drs.dseller.feature_orders.presentation.toOrderSuccess
 import com.drs.dseller.ui.theme.AppTypography

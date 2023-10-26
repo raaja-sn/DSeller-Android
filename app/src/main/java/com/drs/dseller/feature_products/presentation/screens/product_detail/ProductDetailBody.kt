@@ -1,4 +1,4 @@
-package com.drs.dseller.feature_products.presentation.screens.components
+package com.drs.dseller.feature_products.presentation.screens.product_detail
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +39,7 @@ import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.buttons.RoundCorneredButton
 import com.drs.dseller.core.utils.AppUtils
 import com.drs.dseller.feature_products.domain.model.ProductDetail
+import com.drs.dseller.feature_products.presentation.screens.product_list.getProductImageFromListOfImages
 import com.drs.dseller.feature_products.presentation.states.ProductDetailState
 import com.drs.dseller.ui.theme.AppTypography
 import com.drs.dseller.ui.theme.Black80

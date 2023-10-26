@@ -1,4 +1,4 @@
-package com.drs.dseller.feature_products.presentation.screens.components
+package com.drs.dseller.feature_products.presentation.screens.product_list
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

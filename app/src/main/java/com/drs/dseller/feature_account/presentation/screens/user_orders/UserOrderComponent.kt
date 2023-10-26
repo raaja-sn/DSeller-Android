@@ -1,4 +1,4 @@
-package com.drs.dseller.feature_account.presentation.screens.components
+package com.drs.dseller.feature_account.presentation.screens.user_orders
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement

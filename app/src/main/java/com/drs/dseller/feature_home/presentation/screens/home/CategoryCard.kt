@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.drs.dseller.feature_home.presentation.screens.components
+package com.drs.dseller.feature_home.presentation.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Spacer

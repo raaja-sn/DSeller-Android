@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -100,6 +101,7 @@ fun SignInBody(
             enabled = true,
             keyboardType = KeyboardType.Password,
             fieldText = state.password,
+            imeAction = ImeAction.Done,
             textChangeCallback = passwordChangeListener
         )
         Text(

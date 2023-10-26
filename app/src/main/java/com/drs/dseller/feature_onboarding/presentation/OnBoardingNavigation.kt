@@ -2,16 +2,14 @@ package com.drs.dseller.feature_onboarding.presentation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import androidx.navigation.PopUpToBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.drs.dseller.core.navigation.getViewModel
 import com.drs.dseller.feature_home.ROUTE_HOME
 import com.drs.dseller.feature_onboarding.presentation.screens.confirm_code.ConfirmationCodeScreen
 import com.drs.dseller.feature_onboarding.presentation.screens.login.SignInScreen
 import com.drs.dseller.feature_onboarding.presentation.screens.signup.SignUpScreen
 import com.drs.dseller.feature_onboarding.presentation.viewmodels.OnBoardingViewModel
-import com.drs.dseller.getViewModel
 
 
 fun NavHostController.toSignUp(){

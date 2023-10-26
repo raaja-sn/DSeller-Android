@@ -11,7 +11,6 @@ import com.drs.dseller.core.response.SessionResponse
 import com.drs.dseller.feature_account.domain.model.AccountUser
 import com.drs.dseller.feature_account.domain.model.UserOrderFilter
 import com.drs.dseller.feature_account.domain.usecases.AccountUseCases
-import com.drs.dseller.feature_account.presentation.states.AccountAppBarState
 import com.drs.dseller.feature_account.presentation.states.AccountBottomNavigationBarState
 import com.drs.dseller.feature_account.presentation.states.AccountDetailScreenState
 import com.drs.dseller.feature_account.presentation.states.AccountErrorState
@@ -104,6 +103,26 @@ class UserAccountViewModel @Inject constructor(
                     phoneNumber = event.phoneNumber
                 )
             }
+
+            is UserAccountDetailEvent.ChangeErrorState -> {
+                _userAccountDetailState.value = _userAccountDetailState.value.copy(
+                    errorState = AccountErrorState(
+                        event.isError,
+                        event.message
+                    )
+                )
+            }
+            is UserAccountDetailEvent.ValidateUserDetails -> {
+                _userAccountDetailState.value = _userAccountDetailState.value.copy(
+                    shouldValidate = event.shouldValidate
+                )
+            }
+
+            is UserAccountDetailEvent.DisplayOrHIdeSuccessInfo -> {
+                _userAccountDetailState.value = _userAccountDetailState.value.copy(
+                    shouldDisplaySuccessInfo = event.shouldDisplay
+                )
+            }
         }
     }
 
@@ -137,7 +156,7 @@ class UserAccountViewModel @Inject constructor(
 
             viewModelScope.launch {
                 _userAccountDetailState.value = _userAccountDetailState.value.copy(
-                    updatingUser = true
+                    updatingUser = true,
                 )
                 when (val r = accountUseCases.updateUser(
                         AccountUser(
@@ -160,6 +179,7 @@ class UserAccountViewModel @Inject constructor(
                         _userAccountDetailState.value = _userAccountDetailState.value.copy(
                             updatingUser = false,
                             user = r.data,
+                            shouldDisplaySuccessInfo = true
                         )
                     }
                 }
@@ -196,9 +216,12 @@ class UserAccountViewModel @Inject constructor(
                 getInvoice()
             }
             is UserInvoiceEvent.SetOrderId -> {
-                _userInvoiceState.value = _userInvoiceState.value.copy(
-                    orderId = event.orderId
-                )
+                if(userInvoiceState.value.orderId != event.orderId){
+                    _userInvoiceState.value = _userInvoiceState.value.copy(
+                        orderId = event.orderId
+                    )
+                    getInvoice()
+                }
             }
         }
     }
@@ -252,6 +275,11 @@ sealed class UserAccountDetailEvent{
 
     data class ChangeName(val name:String):UserAccountDetailEvent()
     data class ChangePhoneNumber(val phoneNumber:String):UserAccountDetailEvent()
+    data class ValidateUserDetails(val shouldValidate:Boolean):UserAccountDetailEvent()
+
+    data class ChangeErrorState(val isError:Boolean,val message:String):UserAccountDetailEvent()
+
+    data class DisplayOrHIdeSuccessInfo(val shouldDisplay:Boolean):UserAccountDetailEvent()
 
 }
 

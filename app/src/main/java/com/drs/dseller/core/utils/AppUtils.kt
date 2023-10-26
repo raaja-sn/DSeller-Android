@@ -17,9 +17,15 @@ class AppUtils {
         }
 
         fun getFormattedDate(
-            dateInMillis:Long
+            dateInMillis:Long?
         ):String{
-            return SimpleDateFormat("MMM-dd-YYYY").format(Date(dateInMillis))
+            return dateInMillis?.let {
+                SimpleDateFormat("MMM-dd-YYYY").format(Date(dateInMillis))
+            }?:""
         }
+
+        fun getTwoDecimalSpacedPrice(
+            price:Double
+        ) = String.format("%.2f",price).toDouble()
     }
 }

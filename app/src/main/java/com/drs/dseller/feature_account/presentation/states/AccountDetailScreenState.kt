@@ -7,5 +7,16 @@ data class AccountDetailScreenState(
     val name:String = "",
     val phoneNumber:String = "",
     val errorState:AccountErrorState = AccountErrorState(),
-    val updatingUser:Boolean = false
+    val shouldValidate:Boolean = false,
+    val updatingUser:Boolean = false,
+    val shouldDisplaySuccessInfo:Boolean = false
 )
+
+
+fun AccountDetailScreenState.hasValidUserName():Boolean{
+    return name.isNotEmpty() || name.length >= 4
+}
+
+fun AccountDetailScreenState.hasValidPhoneNumber():Boolean{
+    return phoneNumber.length == 10
+}

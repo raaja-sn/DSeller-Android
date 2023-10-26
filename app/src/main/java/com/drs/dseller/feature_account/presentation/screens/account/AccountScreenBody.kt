@@ -1,14 +1,11 @@
-package com.drs.dseller.feature_account.presentation.screens.components
+package com.drs.dseller.feature_account.presentation.screens.account
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -40,7 +37,6 @@ import com.drs.dseller.ui.theme.AppTypography
 import com.drs.dseller.ui.theme.Black80
 import com.drs.dseller.ui.theme.Green40
 import com.drs.dseller.ui.theme.Grey20
-import com.drs.dseller.ui.theme.Grey60
 import com.drs.dseller.ui.theme.Grey80
 import com.drs.dseller.ui.theme.White80
 

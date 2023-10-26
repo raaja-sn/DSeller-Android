@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import com.drs.dseller.R
@@ -98,7 +99,7 @@ fun SignUpScreenBody(
             true,
             state.phoneNumber,
             KeyboardType.Number,
-            phoneChangedListener
+            textChangeCallback = phoneChangedListener
         )
         FormTextField(
             parentModifier
@@ -107,7 +108,7 @@ fun SignUpScreenBody(
             true,
             state.email,
             KeyboardType.Email,
-            emailChangeListener
+            textChangeCallback = emailChangeListener
         )
         FormTextField(
             parentModifier
@@ -116,7 +117,8 @@ fun SignUpScreenBody(
             true,
             state.password,
             KeyboardType.Password,
-            passwordChangeListener
+            imeAction = ImeAction.Done,
+            textChangeCallback = passwordChangeListener
         )
 
         TermsText(modifier = parentModifier)

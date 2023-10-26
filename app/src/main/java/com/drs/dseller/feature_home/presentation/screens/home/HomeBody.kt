@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 
-package com.drs.dseller.feature_home.presentation.screens
+package com.drs.dseller.feature_home.presentation.screens.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -32,8 +32,6 @@ import androidx.compose.ui.unit.dp
 import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.text_fields.SearchField
 import com.drs.dseller.feature_home.domain.model.Category
-import com.drs.dseller.feature_home.presentation.screens.components.CategoryCard
-import com.drs.dseller.feature_home.presentation.screens.components.OfferImage
 import com.drs.dseller.feature_home.presentation.states.HomeState
 import com.drs.dseller.ui.theme.AppTypography
 import com.drs.dseller.ui.theme.Black80

@@ -1,17 +1,14 @@
-package com.drs.dseller.feature_products.presentation.screens.components
+package com.drs.dseller.feature_products.presentation.screens.product_list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.booleanResource
-import androidx.lifecycle.LifecycleOwner
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.drs.dseller.R

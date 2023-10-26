@@ -61,10 +61,17 @@
 
     <!-- Account -->
     <string name="account_order">My Orders</string>
+    <string name="account_invoice">Invoice</string>
     <string name="account_detail">My Details</string>
     <string name="account_about">About</string>
     <string name="account_logout">Logout</string>
 
+    <!-- Account Detail-->
+    <string name="account_detail_update">Update</string>
+    <string name="account_detail_update_success">Update Successful</string>
+
+    <!-- User Orders -->
+    <string name="user_orders_empty">No Orders</string>
 
     <!-- Error -->
     <string name="error_title_default">Failed</string>
@@ -110,6 +117,7 @@
     <string name="description_account_about">About</string>
     <string name="description_account_logout">Logout</string>
     <string name="description_account_profile_image">Profile Image</string>
+    <string name="description_user_order_empty">Orders empty Image</string>
 
 
 

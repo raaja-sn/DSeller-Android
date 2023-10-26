@@ -1,4 +1,4 @@
-package com.drs.dseller.feature_orders.presentation.screens.components
+package com.drs.dseller.feature_orders.presentation.screens.shopping_cart
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -193,7 +193,7 @@ private fun getCartTotal(cartItems:List<CartProduct>):Double{
     cartItems.forEach { 
         total += (it.price * it.quantity)
     }
-    return String.format("%.2f",total).toDouble()
+    return AppUtils.getTwoDecimalSpacedPrice(total)
 }
 
 @Preview

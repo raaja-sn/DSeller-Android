@@ -4,25 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.drs.dseller.core.navigation.getViewModel
 import com.drs.dseller.feature_account.presentation.Account
 import com.drs.dseller.feature_home.Home
-import com.drs.dseller.feature_home.presentation.HomeViewModel
-import com.drs.dseller.feature_home.presentation.screens.HomeScreen
 import com.drs.dseller.feature_onboarding.presentation.Onboard
 import com.drs.dseller.feature_orders.presentation.Cart
 import com.drs.dseller.feature_products.presentation.Products
@@ -65,33 +57,5 @@ class DSellerActivity : ComponentActivity() {
             }
         }
 
-    }
-}
-
-
-@Composable
-inline fun <reified V:ViewModel> NavBackStackEntry.getViewModel(navController: NavHostController):V{
-    val parentRoute = destination.parent?.route?:return hiltViewModel()
-    val pEntry = remember(this){
-        navController.getBackStackEntry(parentRoute)
-    }
-    return hiltViewModel(pEntry)
-}
-
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    DSellerTheme {
-        Greeting("Android")
     }
 }

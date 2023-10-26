@@ -1,9 +1,8 @@
-package com.drs.dseller.feature_orders.presentation.screens
+package com.drs.dseller.feature_orders.presentation.screens.order_success
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
-import com.drs.dseller.feature_orders.presentation.screens.components.OrderSuccessBody
 
 @Composable
 fun OrderSuccessScreen(

@@ -74,9 +74,8 @@ fun AppBottomNavigationBar(
                 interactionSource
             ) {
                 getParentRoute(backStackEntry)?.let {
-                    if (it != ROUTE_PRODUCTS && it != ROUTE_HOME) {
-                        navigateToShop(it, navHostController)
-                    }
+                    if (it == ROUTE_PRODUCTS && it == ROUTE_HOME)return@let
+                    navigateToShop(it, navHostController)
                 }
             }
     }
@@ -86,6 +85,7 @@ fun AppBottomNavigationBar(
                 interactionSource
             ) {
                 getParentRoute(backStackEntry)?.let {
+                    if(it == ROUTE_CART)return@let
                     navigateToCart(it, navHostController)
                 }
             }
@@ -97,6 +97,7 @@ fun AppBottomNavigationBar(
                 interactionSource
             ) {
                 getParentRoute(backStackEntry)?.let {
+                    if(it == ROUTE_ACCOUNT)return@let
                     navigateToAccount(it, navHostController)
                 }
             }
@@ -294,7 +295,7 @@ private fun navigateToAccount(parentRoute: String,navHostController: NavHostCont
     if(parentRoute == ROUTE_CART){
         navHostController.popBackStack(ROUTE_CART,true)
     }
-    navHostController.toAccount(navHostController)
+    navHostController.toAccount()
 }
 
 
