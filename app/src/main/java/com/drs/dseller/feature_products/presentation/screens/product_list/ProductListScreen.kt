@@ -105,18 +105,15 @@ fun ProductListScreen(
         },
         containerColor = Color.White
     ){ innerPadding ->
-        if(products.itemCount > 0){
-            ProductListBody(
-                modifier = Modifier
-                    .background(Color.White)
-                    .padding(innerPadding)
-                    .padding(horizontal = dimensionResource(id = R.dimen.five_dp)),
-                productsPagingItems = products,
-                itemClicked = productItemClicked,
-                addToCart = addToCart
-            )
-        }
-
+        ProductListBody(
+            modifier = Modifier
+                .background(Color.White)
+                .padding(innerPadding)
+                .padding(horizontal = dimensionResource(id = R.dimen.five_dp)),
+            products = products,
+            itemClicked = productItemClicked,
+            addToCart = addToCart
+        )
 
     }
 

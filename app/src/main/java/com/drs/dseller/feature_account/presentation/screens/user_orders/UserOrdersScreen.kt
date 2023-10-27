@@ -104,7 +104,7 @@ fun UserOrdersScreen(
         if(ordersList.itemCount > 0){
             UserOrdersBody(
                 innerPadding = innerPadding,
-                ordersPagingItems = ordersList,
+                orders = ordersList,
                 orderClicked = orderClicked
             )
         }else{

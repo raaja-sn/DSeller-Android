@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,14 +18,12 @@ import com.drs.dseller.feature_products.domain.model.Product
 fun ProductListBody(
     modifier: Modifier = Modifier,
     isTablet:Boolean = booleanResource(id = R.bool.is_tablet),
-    productsPagingItems:LazyPagingItems<Product>,
+    products:LazyPagingItems<Product>,
     itemClicked:(String) -> Unit,
     addToCart:(Product) -> Unit
 ){
     val gridState = rememberLazyGridState()
-    val products = remember {
-        mutableStateOf(productsPagingItems)
-    }
+
     val cells = remember{
         if(isTablet){
             3
@@ -42,13 +39,13 @@ fun ProductListBody(
         state = gridState
     ){
         items(
-            count = products.value.itemCount,
-            key = products.value.itemKey { product: Product ->
+            count = products.itemCount,
+            key = products.itemKey { product: Product ->
                 product.productId
             },
             contentType = {"Products"}
         ){ idx ->
-            products.value[idx]?.let{
+            products[idx]?.let{
                 ProductElement(
                     product = it,
                     productClicked = itemClicked,
