@@ -18,7 +18,6 @@ class UserOrderPagingSource(
 
     override suspend fun load(params: LoadParams<UserOrderFilter>): LoadResult<UserOrderFilter, UserOrder> {
         val key = params.key?:filter
-        println("loading page ----- ${key.pageNumber} page size :${key.pageSize}")
         return try{
             val resp = userOrderService.listOrders(
                 key.userId,

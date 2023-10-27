@@ -13,6 +13,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -37,60 +39,39 @@ import java.util.Date
 @Composable
 fun UserOrdersBody(
     innerPadding:PaddingValues,
-    orders:LazyPagingItems<UserOrder>,
+    ordersPagingItems:LazyPagingItems<UserOrder>,
     orderClicked:(String) -> Unit
 ){
 
     val listState = rememberLazyListState()
 
-    if(orders.itemCount == 0){
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                modifier = Modifier
-                    .size(dimensionResource(id = R.dimen.three_hundred_dp))
-                    .aspectRatio(1f / 0.7f)
-                    .padding(horizontal = dimensionResource(id = R.dimen.thirty_dp)),
-                painter = painterResource(id = R.drawable.img_empty_order),
-                contentDescription = stringResource(id = R.string.description_user_order_empty),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                text = stringResource(id = R.string.user_orders_empty),
-                style = AppTypography.headlineMedium,
-                color = Black80,
-                textAlign = TextAlign.Center
-            )
-        }
-    }else{
-        LazyColumn(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = dimensionResource(id = R.dimen.twenty_dp))
-                .fillMaxSize(),
-            state = listState,
-        ){
-            items(
-                count = orders.itemCount,
-                key = orders.itemKey { order: UserOrder ->
-                    order.orderId
-                }
-            ){ idx ->
-                orders[idx]?.let{
-                    UserOrderComponent(
-                        order = it,
-                        orderClicked = orderClicked
+    val orders = remember {
+        mutableStateOf(ordersPagingItems)
+    }
+
+    LazyColumn(
+        modifier = Modifier
+            .padding(innerPadding)
+            .padding(horizontal = dimensionResource(id = R.dimen.twenty_dp))
+            .fillMaxSize(),
+        state = listState,
+    ){
+        items(
+            count = orders.value.itemCount,
+            key = orders.value.itemKey { order: UserOrder ->
+                order.orderId
+            }
+        ){ idx ->
+            orders.value[idx]?.let{
+                UserOrderComponent(
+                    order = it,
+                    orderClicked = orderClicked
+                )
+                if(idx != orders.value.itemCount-1){
+                    Divider(
+                        thickness = 1.dp,
+                        color = White80
                     )
-                    if(idx != orders.itemCount-1){
-                        Divider(
-                            thickness = 1.dp,
-                            color = White80
-                        )
-                    }
                 }
             }
         }
@@ -115,7 +96,7 @@ private fun UserOrderListPreview(){
     }
     UserOrdersBody(
         innerPadding = PaddingValues(0.dp) ,
-        orders = fl.collectAsLazyPagingItems(),
+        ordersPagingItems = fl.collectAsLazyPagingItems(),
         ){
 
     }

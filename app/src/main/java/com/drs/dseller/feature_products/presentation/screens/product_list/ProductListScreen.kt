@@ -49,6 +49,7 @@ fun ProductListScreen(
         val observer = object:DefaultLifecycleObserver{
             override fun onResume(owner: LifecycleOwner) {
                 super.onResume(owner)
+                println("Products count ---- ${products.itemCount}")
                 if(products.itemCount > 0) return
                 vm.onProductListEvent(ProductsEvent.ListProducts)
             }
@@ -104,16 +105,18 @@ fun ProductListScreen(
         },
         containerColor = Color.White
     ){ innerPadding ->
+        if(products.itemCount > 0){
+            ProductListBody(
+                modifier = Modifier
+                    .background(Color.White)
+                    .padding(innerPadding)
+                    .padding(horizontal = dimensionResource(id = R.dimen.five_dp)),
+                productsPagingItems = products,
+                itemClicked = productItemClicked,
+                addToCart = addToCart
+            )
+        }
 
-        ProductListBody(
-            modifier = Modifier
-                .background(Color.White)
-                .padding(innerPadding)
-                .padding(horizontal = dimensionResource(id = R.dimen.five_dp)),
-            products = products,
-            itemClicked = productItemClicked,
-            addToCart = addToCart
-        )
 
     }
 

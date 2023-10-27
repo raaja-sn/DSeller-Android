@@ -36,6 +36,7 @@ import com.drs.dseller.R
 import com.drs.dseller.core.ui_elements.clickableWithoutRipple
 import com.drs.dseller.core.utils.AppUtils
 import com.drs.dseller.feature_products.domain.model.Product
+import com.drs.dseller.feature_products.domain.model.ProductPicture
 import com.drs.dseller.ui.theme.AppTypography
 import com.drs.dseller.ui.theme.Black80
 import com.drs.dseller.ui.theme.Green40
@@ -145,11 +146,11 @@ private fun getPriceWithCurrencyCode(price:Double):String {
     return "${AppUtils.getCurrencySymbol("en","in")} $price"
 }
 
-fun getProductImageFromListOfImages(idx:Int, productImages: List<String>?):String{
+fun getProductImageFromListOfImages(idx:Int, productImages: List<ProductPicture>?):String{
     return if(productImages == null || idx >= productImages.size){
         return ""
     }else{
-        productImages[idx]
+        productImages[idx].pictureUrl
     }
 }
 
