@@ -105,6 +105,7 @@ fun HomeBody(
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxWidth(),
+                    beyondBoundsPageCount = 3,
                     state = pagerState
                 ) { page ->
                     OfferImage(

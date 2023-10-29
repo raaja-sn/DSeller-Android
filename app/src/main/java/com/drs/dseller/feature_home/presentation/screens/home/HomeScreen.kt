@@ -33,6 +33,7 @@ fun HomeScreen(
             override fun onResume(owner: LifecycleOwner) {
                 super.onResume(owner)
                 vm.onEvent(HomeEvent.GetCategories)
+                vm.onEvent(HomeEvent.GetOffers)
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)

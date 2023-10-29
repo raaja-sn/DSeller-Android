@@ -68,7 +68,7 @@ fun CategoryCard(
             alignment = Alignment.TopCenter,
             placeholder = painterResource(id = placeHolderId),
             error = painterResource(id = placeHolderId),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
         Spacer(
             modifier = Modifier
