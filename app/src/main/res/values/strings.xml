@@ -59,6 +59,19 @@
     <string name="cart_order_filed_title">Oops! Order Failed</string>
     <string name="cart_order_filed_try_again">Try Again</string>
 
+    <!-- Account -->
+    <string name="account_order">My Orders</string>
+    <string name="account_invoice">Invoice</string>
+    <string name="account_detail">My Details</string>
+    <string name="account_about">About</string>
+    <string name="account_logout">Logout</string>
+
+    <!-- Account Detail-->
+    <string name="account_detail_update">Update</string>
+    <string name="account_detail_update_success">Update Successful</string>
+
+    <!-- User Orders -->
+    <string name="user_orders_empty">No Orders</string>
 
     <!-- Error -->
     <string name="error_title_default">Failed</string>
@@ -77,6 +90,7 @@
     <string name="dialog_close_text">Close</string>
 
     <!-- Content Descriptions -->
+    <string name="description_arrow_right">Arrow right</string>
     <string name="description_logo">D Seller Logo</string>
     <string name="description_confirm_code">Confirm Code Button</string>
     <string name="description_search_icon">Search Icon</string>
@@ -98,6 +112,12 @@
     <string name="description_order_placed">Order placed Image</string>
     <string name="description_order_failed_close">Close Order Failed Dialog</string>
     <string name="description_order_failed_image">order failed image</string>
+    <string name="description_account_order">My Orders</string>
+    <string name="description_account_detail">My Details</string>
+    <string name="description_account_about">About</string>
+    <string name="description_account_logout">Logout</string>
+    <string name="description_account_profile_image">Profile Image</string>
+    <string name="description_user_order_empty">Orders empty Image</string>
 
 
 

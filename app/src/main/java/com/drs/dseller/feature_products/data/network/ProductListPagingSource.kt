@@ -32,10 +32,10 @@ class ProductListPagingSource(
             )
             val pList = resultResp.body() ?: listOf()
             if (pList.isEmpty()) {
-                println("loading page ${key.filter.pageNumber}")
+                //println("loading page ${key.filter.pageNumber}")
                 LoadResult.Page(pList,null,null)
             } else {
-                println("loading page ${key.filter.pageNumber}")
+                //println("loading page ${key.filter.pageNumber}")
                 LoadResult.Page(
                     pList,
                     getKey(key.filter.pageNumber - 1,  key),

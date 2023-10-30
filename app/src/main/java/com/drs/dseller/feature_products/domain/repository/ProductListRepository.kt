@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Repository for Shopper Products list
  *
- * @param P The List Product
+ * @param P The List of Products
  * @param Q The key or filter for fetching products list
  */
 interface ProductListRepository<P : Any,Q:Any> {

@@ -15,5 +15,5 @@ class GetUser @Inject constructor(
 ) {
 
     suspend operator fun invoke() =
-        repo.getUser()
+        repo.getUser(false)
 }

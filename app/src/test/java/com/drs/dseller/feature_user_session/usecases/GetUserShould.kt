@@ -29,17 +29,17 @@ class GetUserShould :BaseTest() {
     @Test
     fun `get the current user`() = runTest{
         val appuser = AppUser("Raaja","test@gmail.com")
-        whenever(repo.getUser()).thenReturn(
+        whenever(repo.getUser(false)).thenReturn(
             SessionResponse.Success(appuser)
         )
         val r = useCase.invoke()
-        verify(repo,times(1)).getUser()
+        verify(repo,times(1)).getUser(false)
         assertEquals((r as SessionResponse.Success).data.fullname , "Raaja")
     }
 
     @Test
     fun `send error when current user session in unavailable`() = runTest{
-        whenever(repo.getUser()).thenReturn(
+        whenever(repo.getUser(false)).thenReturn(
             SessionResponse.Error("Unavailable")
         )
         val r = useCase.invoke()

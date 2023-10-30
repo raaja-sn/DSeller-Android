@@ -11,7 +11,7 @@ data class HomeState(
         Category("Electronics"),
         Category("Fashion"),
         Category("Home Appliances"),
-        Category("Books"),
+        Category("Groceries"),
         Category("Toys"),
         Category("Sports & Fitness"),
         Category("Kitchen & Decors"),

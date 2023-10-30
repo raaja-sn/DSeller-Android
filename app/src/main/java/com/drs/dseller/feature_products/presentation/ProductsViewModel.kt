@@ -10,6 +10,7 @@ import com.drs.dseller.core.domain.model.shopping_cart.CartProduct
 import com.drs.dseller.core.domain.usecases.shopping_cart_use_cases.ShoppingCartUseCases
 import com.drs.dseller.feature_products.domain.model.Product
 import com.drs.dseller.feature_products.domain.model.ProductDetail
+import com.drs.dseller.feature_products.domain.model.ProductPicture
 import com.drs.dseller.feature_products.domain.model.ProductSearchFilter
 import com.drs.dseller.feature_products.domain.usecases.ProductsUseCases
 import com.drs.dseller.feature_products.presentation.states.ProductDetailErrorState
@@ -188,9 +189,9 @@ class ProductsViewModel @Inject constructor(
         )
     }
 
-    private fun getProductImageUrl(pImages:List<String>):String{
+    private fun getProductImageUrl(pImages:List<ProductPicture>):String{
         if(pImages.isEmpty())return ""
-        return pImages[0]
+        return pImages[0].pictureUrl
     }
 
     private fun listProducts(){

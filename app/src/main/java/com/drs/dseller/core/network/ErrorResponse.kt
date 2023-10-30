@@ -8,7 +8,7 @@ data class ErrorResponse(
 ) {
 }
 
-fun String.toNetworkErrorResponse():ErrorResponse{
+fun String.toErrorResponse():ErrorResponse{
     return Gson().fromJson<ErrorResponse>(
         this,ErrorResponse::class.java
     )

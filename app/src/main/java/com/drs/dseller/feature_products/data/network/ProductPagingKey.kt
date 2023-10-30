@@ -8,7 +8,6 @@ import com.drs.dseller.feature_products.domain.model.ProductSearchFilter
  */
 data class ProductPagingKey(
     val filter:ProductSearchFilter,
-    //val isPrepend:Boolean = false
 ) {
 
     companion object{

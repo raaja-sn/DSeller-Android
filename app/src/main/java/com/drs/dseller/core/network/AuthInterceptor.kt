@@ -29,6 +29,7 @@ class AuthInterceptor @Inject constructor(
                 request,
                 getAuthToken(true)
             )
+            response.close()
             chain.proceed(requestWithNewToken)
         }else{
             response

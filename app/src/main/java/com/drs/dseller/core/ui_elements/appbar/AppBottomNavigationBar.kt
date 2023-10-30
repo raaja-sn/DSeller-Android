@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -62,7 +63,6 @@ fun AppBottomNavigationBar(
 ){
 
     val backStackEntry = navHostController.currentBackStackEntryAsState()
-    val currDestination = backStackEntry.value?.destination
 
     val interactionSource = remember {
         MutableInteractionSource()
@@ -74,9 +74,8 @@ fun AppBottomNavigationBar(
                 interactionSource
             ) {
                 getParentRoute(backStackEntry)?.let {
-                    if (it != ROUTE_PRODUCTS && it != ROUTE_HOME) {
-                        navigateToShop(it, navHostController)
-                    }
+                    if (it == ROUTE_PRODUCTS && it == ROUTE_HOME)return@let
+                    navigateToShop(it, navHostController)
                 }
             }
     }
@@ -86,6 +85,7 @@ fun AppBottomNavigationBar(
                 interactionSource
             ) {
                 getParentRoute(backStackEntry)?.let {
+                    if(it == ROUTE_CART)return@let
                     navigateToCart(it, navHostController)
                 }
             }
@@ -97,6 +97,7 @@ fun AppBottomNavigationBar(
                 interactionSource
             ) {
                 getParentRoute(backStackEntry)?.let {
+                    if(it == ROUTE_ACCOUNT)return@let
                     navigateToAccount(it, navHostController)
                 }
             }
@@ -104,6 +105,10 @@ fun AppBottomNavigationBar(
 
     BottomAppBar(
         modifier = Modifier
+            .shadow(elevation = 5.dp, shape =  RoundedCornerShape(
+                topStart = dimensionResource(id = R.dimen.twenty_five_dp),
+                topEnd = dimensionResource(id = R.dimen.twenty_five_dp)
+            ), spotColor = Black80)
             .clip(
                 RoundedCornerShape(
                     topStart = dimensionResource(id = R.dimen.twenty_five_dp),
@@ -111,9 +116,9 @@ fun AppBottomNavigationBar(
                 )
             )
             .height(60.dp)
-            .fillMaxWidth(),
-        containerColor = Color.White,
-        tonalElevation = 25.dp
+            .fillMaxWidth()
+            ,
+        containerColor = Color.White
     ) {
         BottomNavElement(
             modifier = shopModifier,
@@ -290,7 +295,7 @@ private fun navigateToAccount(parentRoute: String,navHostController: NavHostCont
     if(parentRoute == ROUTE_CART){
         navHostController.popBackStack(ROUTE_CART,true)
     }
-    navHostController.toAccount(navHostController)
+    navHostController.toAccount()
 }
 
 
