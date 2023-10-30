@@ -33,5 +33,9 @@ fun NavHostController.toHome(){
     navigate("home")
 }
 
+fun NavHostController.toHomeFromOrderSuccess(){
+    popBackStack(DESTINATION_HOME,false)
+}
+
 const val ROUTE_HOME = "home_route"
 const val DESTINATION_HOME = "home"
