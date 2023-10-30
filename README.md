@@ -25,15 +25,22 @@ The application is constructed with a robust MVVM architecture, utilizing Androi
   <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s6.png" width="30%" />
   &nbsp;
 </p>
+
+<p float="left">
+  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s7.png" width="30%" />
+  &nbsp;
+  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s8.png" width="30%" />
+  &nbsp;
+</p>
 ## Features
 
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
+- Browse Products by Categories
+- Shopping Cart
+- Place Orders
+- Search Products
 
 
 ## Authors
 
-- [Raaja Selvanaathan](https://www.github.com/octokatherine)
+- [Raaja Selvanaathan](https://www.linkedin.com/in/raaja-selvanaathan/)
 
