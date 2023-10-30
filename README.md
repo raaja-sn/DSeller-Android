@@ -17,6 +17,14 @@ The application is constructed with a robust MVVM architecture, utilizing Androi
   &nbsp;
 </p>
 
+<p float="left">
+  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s4.png" width="30%" />
+  &nbsp;
+  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s5.png" width="30%" />
+  &nbsp;
+  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s6.png" width="30%" />
+  &nbsp;
+</p>
 ## Features
 
 - Light/dark mode toggle
