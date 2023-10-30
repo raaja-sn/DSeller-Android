@@ -191,7 +191,6 @@ class UserAccountViewModelShould:BaseTest() {
             AccountResponse.Success(order)
         )
         vm.onUserInvoiceEvent(UserInvoiceEvent.SetOrderId(orderId))
-        vm.onUserInvoiceEvent(UserInvoiceEvent.GetInvoice)
         advanceUntilIdle()
         verify(accountUseCases.getInvoice, times(1)).invoke(orderId)
         assertEquals(vm.userInvoiceState.value.invoice?.invoiceNo,"DES2554455")

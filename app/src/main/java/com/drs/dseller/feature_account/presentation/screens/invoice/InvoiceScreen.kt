@@ -29,27 +29,11 @@ import com.drs.dseller.feature_account.presentation.states.UserInvoiceState
 
 @Composable
 fun InvoiceScreen(
-    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     state:UserInvoiceState,
     bottomNavState:AccountBottomNavigationBarState,
     vm:UserAccountViewModel,
     navHostController: NavHostController
 ){
-    DisposableEffect(key1 = lifecycleOwner){
-
-        val observer = object:DefaultLifecycleObserver{
-            override fun onResume(owner: LifecycleOwner) {
-                super.onResume(owner)
-                if(state.invoice != null) return
-                vm.onUserInvoiceEvent(UserInvoiceEvent.GetInvoice)
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
-
 
     val navBackClicked:()->Unit = remember {
         {
