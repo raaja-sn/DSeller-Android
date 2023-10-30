@@ -3,7 +3,7 @@
 
 DSeller, a cutting-edge Android shopping application, offers a user-friendly platform for customers to browse, purchase, and explore a wide array of products and services with convenience and ease.
 
-The application is constructed with a robust MVVM architecture, utilizing Android Architecture Components and adhering to Clean Architecture principles. Jetpack Compose and Navigation facilitate an engaging user interface. DSeller's backend API, hosted on AWS, ensures reliable data delivery and a seamless user experience.
+The application is constructed with a robust MVVM architecture, utilizing Android Architecture Components and adhering to Clean Architecture principles. Jetpack Compose and Navigation facilitate an engaging user interface. DSeller Node application hosted on AWS, provides the backend API which ensures, secure, reliable data delivery and a seamless user experience.
 
 
 ## Screenshots
