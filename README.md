@@ -32,6 +32,7 @@ The application is constructed with a robust MVVM architecture, utilizing Androi
   <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s8.png" width="30%" />
   &nbsp;
 </p>
+
 ## Features
 
 - Browse Products by Categories
