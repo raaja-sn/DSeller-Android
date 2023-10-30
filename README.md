@@ -9,16 +9,10 @@ The application is constructed with a robust MVVM architecture, utilizing Androi
 ## Screenshots
 
 <p float="left">
-  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s1.png" width="33%" />
-  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s2.png" width="33%" />
-  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s3.png" width="33%" />
+  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s1.png" width="30%" />
+  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s2.png" width="30%" />
+  <img src="https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s3.png" width="30%" />
 </p>
-
-
-[![App Screenshot](https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s1_thumb.png)](https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s1.png)
-
-
-[![App Screenshot](https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s1_thumb.png)](https://dseller.s3.ap-south-1.amazonaws.com/screenshots/s1.png)
 
 ## Features
 
